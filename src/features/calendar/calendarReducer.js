@@ -1,0 +1,4 @@
+export const OPEN_CANCEL_BOOKING_MODAL = "OPEN_CANCEL_BOOKING_MODAL";
+export const ADD_BOOKING = "ADD_BOOKING";
+export const END_BOOKING = "END_BOOKING";
+export const LOG_OUT = "LOG_OUT";
