@@ -16,7 +16,6 @@ import Firebase from "../../../Firebase";
 var db = Firebase.firestore();
 
 const numOfMonthsDisplayed = 2;
-// console.log(typeof currentPeriod);
 // Query all booked rooms
 // Display booked rooms [X]
 // Fix AddBooking.js to be compatible with data model
@@ -37,7 +36,6 @@ class CalendarScreen extends React.Component {
   // Update Firestore names to moment's MM-YY syntax, periodsMonths and periodsDaysHours
   componentDidMount() {
     var currentPeriod = moment().format("MM-YY");
-    // var nextPeriod = currentPeriod
     for(i=numOfMonthsDisplayed;i>0;i--){
       let bookedDaysRef = db.collection("periodsMonths").doc(currentPeriod).collection("periodsDaysHours");
       let bookedDays = bookedDaysRef.get()
@@ -45,15 +43,22 @@ class CalendarScreen extends React.Component {
           snapshot.forEach(doc => {
             let currentBooking = doc.data()
             let calendarPeriod = moment(currentBooking.start.toDate()).format("YYYY-MM-DD")
+            // this.state.items[calendarPeriod] = []
+            // for (let j = 0; j < 3; j++) {
+            //   this.state.items[calendarPeriod].push({
+            //     name: "Item for " + calendarPeriod,
+            //     height: Math.max(50, Math.floor(Math.random() * 150))
+            //   });
+            // }
             console.log(calendarPeriod)
-            // this.state.items[]
             console.log(doc.id, "=>", doc.data());
           });
         })
         .catch(err => {
           console.log("Error getting documents", err);
         });  
-      currentPeriod = moment(currentPeriod).add(1,'month');
+      let addPeriod = moment(currentPeriod).add(1,'month');
+      currentPeriod = addPeriod.format("MM-YY")
     }
     
 
