@@ -12,6 +12,7 @@ import AddBookingScreen from "../features/book/AddBooking";
 import ViewBookingScreen from "../features/book/ViewBooking";
 import ModifyBookingScreen from "../features/book/ModifyBooking";
 import CurrentBookingScreen from "../features/book/CurrentBooking";
+import CalendarScreen from "../features/calendar/CalendarScreen";
 
 class ProfileScreen extends React.Component {
   static navigationOptions = {
@@ -73,6 +74,7 @@ export default createMaterialBottomTabNavigator(
   {
     // Profile: ProfileScreen,
     Home: BookingStack,
+    Calendar: CalendarScreen,
     Chats: ChatStack,
     Notifs: NotificationScreen
   },
