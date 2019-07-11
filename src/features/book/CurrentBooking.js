@@ -8,7 +8,7 @@ import {
   Button,
   Alert
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native-gesture-handler";    // Why not use normal ScrollView?
 import { ListItem } from "react-native-elements";
 import Icon from "react-native-vector-icons/Ionicons";
 

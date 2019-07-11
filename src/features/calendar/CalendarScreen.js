@@ -9,11 +9,14 @@ import { addRoomBooking } from "./calendarActions";
 
 import "firebase/firestore";
 import Firebase from "../../../Firebase";
+import * as firebase from "firebase";
 
 // import * as firebase from "firebase";
 // import 'firebase/firestore'
 
-var db = Firebase.firestore();
+var db = Firebase.firestore().collection("");
+
+
 
 const numOfMonthsDisplayed = 2;
 // Query all booked rooms
@@ -32,36 +35,89 @@ class CalendarScreen extends React.Component {
     )
   });
 
-  // TODO:
+  // DONE:
   // Update Firestore names to moment's MM-YY syntax, periodsMonths and periodsDaysHours
+  // 
+  // TODO:
+  // Query for all same date different time
+  // 
+
+  // TODO: 
+  // Add booking with timestamppp :)
   componentDidMount() {
-    var currentPeriod = moment().format("MM-YY");
-    for(i=numOfMonthsDisplayed;i>0;i--){
-      let bookedDaysRef = db.collection("periodsMonths").doc(currentPeriod).collection("periodsDaysHours");
-      let bookedDays = bookedDaysRef.get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            let currentBooking = doc.data()
-            let calendarPeriod = moment(currentBooking.start.toDate()).format("YYYY-MM-DD")
-            // this.state.items[calendarPeriod] = []
-            // for (let j = 0; j < 3; j++) {
-            //   this.state.items[calendarPeriod].push({
-            //     name: "Item for " + calendarPeriod,
-            //     height: Math.max(50, Math.floor(Math.random() * 150))
-            //   });
-            // }
-            console.log(calendarPeriod)
-            console.log(doc.id, "=>", doc.data());
-          });
-        })
-        .catch(err => {
-          console.log("Error getting documents", err);
-        });  
-      let addPeriod = moment(currentPeriod).add(1,'month');
-      currentPeriod = addPeriod.format("MM-YY")
+    let currentPeriod = moment().format("MM-YY");
+    let tempItems = {}
+    let tempDate1 = new Date("2019-08-27T07:00:00Z")
+    tempDate1 = tempDate1.getTime()
+    let tempDate2 = new Date("2019-08-27T08:00:00Z")
+    tempDate2 = tempDate2.getTime()
+    for(i=0; i<2; i++) {
+      let ref = db.collection("periodsMonths").doc(currentPeriod).collection("periodsDaysHours");
+      let runRef = ref.add({
+        start: firebase.firestore.Timestamp.fromDate(new Date("019-08-27T07:00:00Z")) ,
+        end: firebase.firestore.Timestamp.fromDate(new Date("019-08-27T08:00:00Z")) ,
+      })
     }
+    let ref =  db.collection("periodsMonths").doc(currentPeriod).collection()
+
+    // TODO:
+    // Uncomment below!
+    // for(i=numOfMonthsDisplayed;i>0;i--){
+    //   let bookedDaysRef = db.collection("periodsMonths").doc(currentPeriod).collection("periodsDaysHours");
+    //   let bookedDays = bookedDaysRef.get()
+    //     .then(snapshot => {
+    //       snapshot.forEach(doc => {
+    //         let currentBooking = doc.data()
+    //         let calendarPeriod = moment(currentBooking.start.toDate()).format("YYYY-MM-DD")
+    //         for (let j = 0; j < 3; j++) {
+    //           tempItems.calendarPeriod = [] // May try tempItems[calendarPeriod] or whatever object key instant
+    //           tempItems.calendarPeriod.push({
+    //             name: "Item for " + calendarPeriod,
+    //             height: Math.max(50, Math.floor(Math.random() * 150))
+    //           });
+    //         }
+    //         console.log(calendarPeriod)
+    //         console.log(doc.id, "=>", doc.data());
+    //       });
+    //     })
+    //     .catch(err => {
+    //       console.log("Error getting documents", err);
+    //     });  
+    //   let addPeriod = moment(currentPeriod).add(1,'month');
+    //   currentPeriod = addPeriod.format("MM-YY")
+    //   this.setState(tempItems)
+    //   console.log(this.state.tempItems)
+    // }
     
 
+    // loadItems(day) {
+    //   setTimeout(() => {
+    //     for (let i = -15; i < 85; i++) {
+    //       const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+    //       const strTime = this.timeToString(time);
+    //       if (!this.state.items[strTime]) {
+    //         this.state.items[strTime] = [];
+    //         const numItems = Math.floor(Math.random() * 5);
+    //         for (let j = 0; j < numItems; j++) {
+    //           this.state.items[strTime].push({
+    //             name: "Item for " + strTime,
+    //             height: Math.max(50, Math.floor(Math.random() * 150))
+    //           });
+    //         }
+    //       }
+    //     }
+    //     console.log(this.state.items);
+    //     const newItems = {};
+    //     Object.keys(this.state.items).forEach(key => {
+    //       newItems[key] = this.state.items[key];
+    //     });
+    //     this.setState({
+    //       items: newItems
+    //     });
+    //   }, 1000);
+    //   // console.log(`Load Items for ${day.year}-${day.month}`);
+    // }
+  
     // let myRef = db.collection("periods").doc("August'19").collection("periodsDays").doc("rYje6lv1NeypxLdlpbDn");
     // myRef.get()
     //   .then(doc =>
@@ -85,7 +141,7 @@ class CalendarScreen extends React.Component {
   render() {
     return (
       <Agenda
-        items={this.state.items}
+        items={this.state.tempItems}
         // loadItemsForMonth={this.loadItems.bind(this)}
         selected={"2017-05-16"}
         pastScrollRange={numOfMonthsDisplayed}
@@ -118,34 +174,6 @@ class CalendarScreen extends React.Component {
         }}
       />
     );
-  }
-
-  loadItems(day) {
-    setTimeout(() => {
-      for (let i = -15; i < 85; i++) {
-        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-        const strTime = this.timeToString(time);
-        if (!this.state.items[strTime]) {
-          this.state.items[strTime] = [];
-          const numItems = Math.floor(Math.random() * 5);
-          for (let j = 0; j < numItems; j++) {
-            this.state.items[strTime].push({
-              name: "Item for " + strTime,
-              height: Math.max(50, Math.floor(Math.random() * 150))
-            });
-          }
-        }
-      }
-      console.log(this.state.items);
-      const newItems = {};
-      Object.keys(this.state.items).forEach(key => {
-        newItems[key] = this.state.items[key];
-      });
-      this.setState({
-        items: newItems
-      });
-    }, 1000);
-    // console.log(`Load Items for ${day.year}-${day.month}`);
   }
 
   renderItem(item) {
