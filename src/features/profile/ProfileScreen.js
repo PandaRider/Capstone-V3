@@ -36,11 +36,10 @@ export default class ModalTester extends Component {
       <View style={{ flex: 1 }}>
         <Modal isVisible={this.state.isModalVisible}>
           <View style={styles.center}>
-            <View style={{ paddingBottom: 200 }}>
-              <Text style={{ color: "white" }}>Enter new name</Text>
+            <View style={{ paddingVertical: 30 }}>
+              <Text style={styles.h2}>Enter new name</Text>
 
               <TextInput
-                style={{ color: "white" }}
                 placeholder={username}
                 onChangeText={username => this.setState({ username })}
               />
@@ -57,11 +56,10 @@ export default class ModalTester extends Component {
         </Modal>
         <Modal isVisible={this.state.isEmailModalVisible}>
           <View style={styles.center}>
-            <View style={{ paddingBottom: 200 }}>
-              <Text style={{ color: "white" }}>Enter new email</Text>
+            <View style={{ paddingVertical: 30 }}>
+              <Text style={styles.h2}>Enter new email</Text>
 
               <TextInput
-                style={{ color: "white" }}
                 placeholder={email}
                 onChangeText={email => this.setState({ email })}
               />
@@ -103,12 +101,11 @@ export default class ModalTester extends Component {
 
 const styles = StyleSheet.create({
   center: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: "white"
+  },
+  h2: {
+    color: "#008BE3",
+    fontSize: 16
   }
 });
