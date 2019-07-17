@@ -44,25 +44,8 @@ export default class BarcodeScannerExample extends React.Component {
             onPress={() => this.setState({ scanned: false })}
           />
         )}
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        >
-          <View
-            style={{
-              width: 200,
-              height: 200,
-              borderColor: "red",
-              borderWidth: 3
-            }}
-          />
+        <View style={styles.center}>
+          <View style={styles.qrbox} />
         </View>
       </View>
     );
@@ -80,3 +63,21 @@ export default class BarcodeScannerExample extends React.Component {
     this.setState({ scanned: true });
   };
 }
+
+const style = StyleSheet.create({
+  center: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  qrbox: {
+    width: 200,
+    height: 200,
+    borderColor: "red",
+    borderWidth: 3
+  }
+});

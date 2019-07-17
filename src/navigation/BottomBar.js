@@ -7,23 +7,13 @@ import UserList from "../features/chat/UserList";
 import HomeScreen from "../navigation/HomeScreen";
 import NotificationScreen from "../features/notifications/notifications";
 import ScannerScreen from "../features/qr/Scanner";
+import SelectDateTime from "../features/book/SelectDateTime";
 import SelectRoomScreen from "../features/book/SelectRoom";
 import AddBookingScreen from "../features/book/AddBooking";
 import ViewBookingScreen from "../features/book/ViewBooking";
 import ModifyBookingScreen from "../features/book/ModifyBooking";
 import CurrentBookingScreen from "../features/book/CurrentBooking";
-
-class ProfileScreen extends React.Component {
-  static navigationOptions = {
-    tabBarIcon: ({ focused, tintColor }) => (
-      <Icon style={[{ color: tintColor }]} size={25} name={"ios-person"} />
-    ),
-    activeTintColor: "white"
-  };
-  render() {
-    return null;
-  }
-}
+import ProfileScreen from "../features/profile/ProfileScreen";
 
 const ChatStack = createStackNavigator(
   {
@@ -52,6 +42,7 @@ const ChatStack = createStackNavigator(
 const BookingStack = createStackNavigator(
   {
     Home: HomeScreen,
+    SelectDateTime: SelectDateTime,
     SelectRoom: SelectRoomScreen,
     AddBooking: AddBookingScreen,
     ViewBooking: ViewBookingScreen,
@@ -71,7 +62,7 @@ const BookingStack = createStackNavigator(
 
 export default createMaterialBottomTabNavigator(
   {
-    // Profile: ProfileScreen,
+    Profile: ProfileScreen,
     Home: BookingStack,
     Chats: ChatStack,
     Notifs: NotificationScreen

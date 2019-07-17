@@ -148,7 +148,7 @@ class Home extends React.Component {
           </View>
           <ActionButton
             buttonColor="#1253BC"
-            onPress={() => this.props.navigation.navigate("SelectRoom")}
+            onPress={() => this.props.navigation.navigate("SelectDateTime")}
           />
         </View>
       );
