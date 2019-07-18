@@ -10,6 +10,7 @@ import {
 
 import "firebase/firestore";
 import Firebase from "../../../Firebase";
+import DatePicker from "react-native-datepicker";
 
 var db = Firebase.firestore();
 
@@ -96,20 +97,54 @@ export default class ModifyBooking extends React.Component {
             />
 
             <Text style={styles.h2}>Date</Text>
-            <TextInput
-              style={styles.input}
-              placeholder={details.date}
-              onChangeText={date => this.setState({ date })}
+            <DatePicker
+              style={styles.picker}
+              mode="date" //The enum of date, datetime and time
+              placeholder="Select date"
+              format="DD-MM-YYYY"
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              showIcon={false}
+              onDateChange={date => {
+                this.setState({ date: date });
+              }}
             />
 
             <Text style={styles.h2}>Time</Text>
-            <TextInput
-              style={styles.input}
-              placeholder={details.time}
-              onChangeText={time => this.setState({ time })}
-            />
+            <View style={styles.timeinput}>
+              <Text style={styles.h2}>Start time</Text>
+              <DatePicker
+                style={styles.picker}
+                mode="time" //The enum of date, datetime and time
+                placeholder="Select start time"
+                format="hh:mm"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                showIcon={false}
+                onDateChange={starttime => {
+                  this.setState({ starttime: starttime });
+                }}
+              />
+            </View>
+            <View style={styles.timeinput}>
+              <Text style={styles.h2}> End time </Text>
+              <DatePicker
+                style={styles.picker}
+                mode="time" //The enum of date, datetime and time
+                placeholder="Select end time"
+                format="hh:mm"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                showIcon={false}
+                onDateChange={endtime => {
+                  this.setState({ endtime: endtime });
+                }}
+              />
+            </View>
 
-            <Button title="Update" onPress={() => this.updateBooking()} />
+            <View style={{ paddingVertical: 15 }}>
+              <Button title="Update" onPress={() => this.updateBooking()} />
+            </View>
           </View>
         </View>
       );
@@ -142,7 +177,9 @@ const styles = StyleSheet.create({
   },
   h2: {
     color: "#008BE3",
-    fontSize: 16
+    fontSize: 16,
+    padding: 5,
+    fontWeight: "bold"
   },
   remaining: {
     color: "#BBBBBB",
@@ -153,5 +190,12 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     padding: 10
+  },
+  picker: {
+    width: 200
+  },
+  timeinput: {
+    flexDirection: "row",
+    padding: 5
   }
 });

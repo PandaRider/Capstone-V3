@@ -14,6 +14,7 @@ import ViewBookingScreen from "../features/book/ViewBooking";
 import ModifyBookingScreen from "../features/book/ModifyBooking";
 import CurrentBookingScreen from "../features/book/CurrentBooking";
 import ProfileScreen from "../features/profile/ProfileScreen";
+import ReportScreen from '../features/report/Report';
 
 const ChatStack = createStackNavigator(
   {
@@ -65,7 +66,8 @@ export default createMaterialBottomTabNavigator(
     Profile: ProfileScreen,
     Home: BookingStack,
     Chats: ChatStack,
-    Notifs: NotificationScreen
+    Notifs: NotificationScreen,
+    Report: ReportScreen
   },
   {
     initialRouteName: "Home",

@@ -140,20 +140,6 @@ export default class RoomDetails extends React.Component {
                   onChangeText={attendees => this.setState({ attendees })}
                 />
 
-                <Text style={styles.h2}>Date</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="DD/MM/YYYY"
-                  onChangeText={date => this.setState({ date })}
-                />
-
-                <Text style={styles.h2}>Time</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="hh:mm - hh:mm"
-                  onChangeText={time => this.setState({ time })}
-                />
-
                 <Text style={styles.warning}>All fields are required.</Text>
 
                 <Button title="Book" onPress={() => this.makeBooking()} />

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Text, Button, View, StyleSheet } from "react-native";
 import DatePicker from "react-native-datepicker";
+import { throwStatement } from "@babel/types";
 
 var day = new Date().getDate(); //Current Date
 var month = new Date().getMonth() + 1; //Current Month
@@ -17,6 +18,25 @@ export default class DateTimePicker extends Component {
     this.state = { date: datetoday, starttime: timestart, endtime: timeend };
   }
 
+  parser() {
+    // to parse date and time before it is added to firebase
+    var [dday, dmonth, dyear] = this.state.date.split("-");
+    var dstart = this.state.starttime.split(":");
+    var dend = this.state.endtime.split(":");
+    console.log(this.state.date, this.state.starttime, this.state.endtime);
+    console.log(parseInt(dday), parseInt(dmonth), parseInt(dyear));
+    console.log(dstart.join(""));
+    console.log(dend.join(""));
+
+    dday = parseInt(dday);
+    dmonth = parseInt(dmonth);
+    dyear = parseInt(dyear);
+    dstart = dstart.join("");
+    dend = dend.join("");
+
+    return dday, dmonth, dyear, dstart, dend;
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -25,7 +45,7 @@ export default class DateTimePicker extends Component {
           style={styles.picker}
           date={this.state.date} //initial date from state
           mode="date" //The enum of date, datetime and time
-          placeholder="select date"
+          placeholder="Select date"
           format="DD-MM-YYYY"
           minDate={datetoday}
           maxDate="01-01-2020"
@@ -37,34 +57,38 @@ export default class DateTimePicker extends Component {
           }}
         />
         <Text style={styles.h1}>Select Duration</Text>
-        <Text style={styles.h2}>Start time</Text>
-        <DatePicker
-          style={styles.picker}
-          date={this.state.starttime} //initial date from state
-          mode="time" //The enum of date, datetime and time
-          placeholder="select start time"
-          format="hh:mm"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          showIcon={false}
-          onDateChange={starttime => {
-            this.setState({ starttime: starttime });
-          }}
-        />
-        <Text style={styles.h2}>End time</Text>
-        <DatePicker
-          style={styles.picker}
-          date={this.state.endtime} //initial date from state
-          mode="time" //The enum of date, datetime and time
-          placeholder="select end time"
-          format="hh:mm"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          showIcon={false}
-          onDateChange={endtime => {
-            this.setState({ endtime: endtime });
-          }}
-        />
+        <View style={styles.timeinput}>
+          <Text style={styles.h2}>Start time</Text>
+          <DatePicker
+            style={styles.picker}
+            date={this.state.starttime} //initial date from state
+            mode="time" //The enum of date, datetime and time
+            placeholder="Select start time"
+            format="hh:mm"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            showIcon={false}
+            onDateChange={starttime => {
+              this.setState({ starttime: starttime });
+            }}
+          />
+        </View>
+        <View style={styles.timeinput}>
+          <Text style={styles.h2}> End time </Text>
+          <DatePicker
+            style={styles.picker}
+            date={this.state.endtime} //initial date from state
+            mode="time" //The enum of date, datetime and time
+            placeholder="Select end time"
+            format="hh:mm"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            showIcon={false}
+            onDateChange={endtime => {
+              this.setState({ endtime: endtime });
+            }}
+          />
+        </View>
         <View style={styles.btn}>
           <Button
             title={"Confirm"}
@@ -94,10 +118,15 @@ const styles = StyleSheet.create({
   },
   h2: {
     color: "#008BE3",
-    fontSize: 16
+    fontSize: 16,
+    paddingHorizontal: 20
   },
   picker: {
     width: 200
+  },
+  timeinput: {
+    flexDirection: "row",
+    padding: 5
   }
 });
 

@@ -64,7 +64,7 @@ export default class BarcodeScannerExample extends React.Component {
   };
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   center: {
     position: "absolute",
     top: 0,

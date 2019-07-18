@@ -8,7 +8,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 var username = "Sally Brown";
 var email = "sally_brown@stengg.com";
 
-export default class ModalTester extends Component {
+export default class ProfileScreen extends Component {
   static navigationOptions = {
     tabBarIcon: ({ focused, tintColor }) => (
       <Icon style={[{ color: tintColor }]} size={25} name={"ios-person"} />
