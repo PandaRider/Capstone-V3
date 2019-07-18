@@ -36,7 +36,8 @@ FileSystem.getInfoAsync(idfile).then(file => {
       .doc(userid)
       .set({
         name: "User " + userid.substring(0, 8),
-        uid: userid
+        uid: userid,
+        score: 0
       });
   }
 });

@@ -1,9 +1,35 @@
 import React, { Component } from "react";
-import { Button, Text, View, StyleSheet, ScrollView } from "react-native";
+import {
+  Button,
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  Image
+} from "react-native";
 import { ListItem } from "react-native-elements";
 import Modal from "react-native-modal";
 import { TextInput } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Ionicons";
+
+import "firebase/firestore";
+import Firebase from "../../../Firebase";
+import * as FileSystem from "expo-file-system";
+
+var currentScore;
+var userid = "";
+const file = `${FileSystem.documentDirectory}/userid`;
+FileSystem.readAsStringAsync(file).then(result => {
+  userid = result;
+  db.collection("users")
+    .doc(userid)
+    .get()
+    .then(doc => {
+      currentScore = doc.data().score;
+    });
+});
+
+var db = Firebase.firestore();
 
 var username = "Sally Brown";
 var email = "sally_brown@stengg.com";
@@ -20,8 +46,52 @@ export default class ProfileScreen extends Component {
     isModalVisible: false,
     isEmailModalVisible: false,
     username: username,
-    email: email
+    email: email,
+    score: currentScore
   };
+
+  getScore() {
+    db.collection("users")
+      .doc(userid)
+      .get()
+      .then(doc => {
+        this.state.score = doc.data().score;
+      });
+  }
+
+  getImage() {
+    if (this.state.score == 0) {
+      return (
+        <Image
+          source={{
+            uri:
+              "https://www.citizenm.com/cache/images/citizenm_rott_mtg-0156_005a44cc5a24cc.jpg"
+          }}
+          style={{ width: "100%", height: 200 }}
+        />
+      );
+    } else if (this.state.score == 1) {
+      return (
+        <Image
+          source={{
+            uri:
+              "https://www.geigerfurniture.com/content/dam/ggrcom/page_assets/inspiration/ggr_uw_isp_conference_rooms_01.jpg"
+          }}
+          style={{ width: "100%", height: 200 }}
+        />
+      );
+    } else {
+      return (
+        <Image
+          source={{
+            uri:
+              "https://wearespaces.com/toby/img/meeting-rooms-half-day-rental.jpg"
+          }}
+          style={{ width: "100%", height: 200 }}
+        />
+      );
+    }
+  }
 
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
@@ -30,6 +100,13 @@ export default class ProfileScreen extends Component {
   toggleEmailModal = () => {
     this.setState({ isEmailModalVisible: !this.state.isEmailModalVisible });
   };
+
+  componentWillMount() {
+    const { navigation } = this.props;
+    this.focusListener = navigation.addListener("didFocus", () => {
+      this.getScore();
+    });
+  }
 
   render() {
     return (
@@ -94,6 +171,8 @@ export default class ProfileScreen extends Component {
             }
           />
         </ScrollView>
+
+        {this.getImage()}
       </View>
     );
   }

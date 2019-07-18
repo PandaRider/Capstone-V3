@@ -5,6 +5,17 @@ import Icon from "react-native-vector-icons/Ionicons";
 import * as Permissions from "expo-permissions";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
+import "firebase/firestore";
+import firebase from "../../../Firebase";
+import * as FileSystem from "expo-file-system";
+
+var userid = "";
+const file = `${FileSystem.documentDirectory}/userid`;
+FileSystem.readAsStringAsync(file).then(result => {
+  console.log("chat uid exists: " + result);
+  userid = result;
+});
+
 export default class BarcodeScannerExample extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     tabBarIcon: ({ focused, tintColor }) => (
@@ -57,6 +68,25 @@ export default class BarcodeScannerExample extends React.Component {
 
     if (data == room) {
       alert(`Verification successful!`);
+
+      var newScore;
+
+      const ref = firebase
+        .firestore()
+        .collection("users")
+        .doc(userid);
+
+      firebase.firestore().runTransaction(async transaction => {
+        const doc = await transaction.get(ref);
+        newScore = doc.data().score + 1;
+        transaction.update(ref, {
+          score: newScore
+        });
+      });
+
+      this.props.navigation.navigate("Profile", {
+        score: newScore
+      });
     } else {
       alert("Verifcation failed!");
     }
@@ -81,3 +111,5 @@ const styles = StyleSheet.create({
     borderWidth: 3
   }
 });
+
+// https://rnfirebase.io/docs/v5.x.x/firestore/transactions#Increment-a-value
