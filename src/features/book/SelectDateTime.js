@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Text, Button, View, StyleSheet } from "react-native";
+import { Text, Button, View, StyleSheet, Picker } from "react-native";
 import DatePicker from "react-native-datepicker";
-import { throwStatement } from "@babel/types";
 
 var day = new Date().getDate(); //Current Date
 var month = new Date().getMonth() + 1; //Current Month
@@ -9,8 +8,8 @@ var year = new Date().getFullYear(); //Current Year
 var datetoday = day + "-" + month + "-" + year;
 
 var hours = new Date().getHours(); //Current Hours
-var timestart = hours + ":00";
-var timeend = hours + 1 + ":00";
+var timestart = hours;
+var timeend = hours + 1;
 
 export default class DateTimePicker extends Component {
   constructor(props) {
@@ -37,6 +36,23 @@ export default class DateTimePicker extends Component {
     return dday, dmonth, dyear, dstart, dend;
   }
 
+  getTimePickerItems(tval, start) {
+    var tvals = [];
+    timelimit = 25;
+    if (start == true) {
+      timelimit = 24;
+    }
+
+    for (i = 0; i < timelimit - tval; i++) {
+      if (i + tval < timelimit) {
+        tvals.push(i + tval);
+      }
+    }
+    return tvals.map((t, i) => (
+      <Picker.Item key={i} label={t + ":00"} value={t} />
+    ));
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -59,35 +75,27 @@ export default class DateTimePicker extends Component {
         <Text style={styles.h1}>Select Duration</Text>
         <View style={styles.timeinput}>
           <Text style={styles.h2}>Start time</Text>
-          <DatePicker
-            style={styles.picker}
-            date={this.state.starttime} //initial date from state
-            mode="time" //The enum of date, datetime and time
-            placeholder="Select start time"
-            format="hh:mm"
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
-            showIcon={false}
-            onDateChange={starttime => {
-              this.setState({ starttime: starttime });
-            }}
-          />
+          <Picker
+            selectedValue={this.state.starttime}
+            style={{ height: 30, width: 150 }}
+            onValueChange={(itemValue, itemIndex) =>
+              this.setState({ starttime: itemValue })
+            }
+          >
+            {this.getTimePickerItems(timestart, true)}
+          </Picker>
         </View>
         <View style={styles.timeinput}>
           <Text style={styles.h2}> End time </Text>
-          <DatePicker
-            style={styles.picker}
-            date={this.state.endtime} //initial date from state
-            mode="time" //The enum of date, datetime and time
-            placeholder="Select end time"
-            format="hh:mm"
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
-            showIcon={false}
-            onDateChange={endtime => {
-              this.setState({ endtime: endtime });
-            }}
-          />
+          <Picker
+            selectedValue={this.state.endtime}
+            style={{ height: 30, width: 150 }}
+            onValueChange={(itemValue, itemIndex) =>
+              this.setState({ endtime: itemValue })
+            }
+          >
+            {this.getTimePickerItems(this.state.starttime + 1, false)}
+          </Picker>
         </View>
         <View style={styles.btn}>
           <Button
@@ -129,7 +137,3 @@ const styles = StyleSheet.create({
     padding: 5
   }
 });
-
-//https://aboutreact.com/react-native-get-current-date-time/
-//https://aboutreact.com/react-native-datepicker/
-//https://www.npmjs.com/package/react-native-datepicker
