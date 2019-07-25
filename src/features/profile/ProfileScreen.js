@@ -5,7 +5,8 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  Image
+  Image,
+  ActivityIndicator
 } from "react-native";
 import { ListItem } from "react-native-elements";
 import Modal from "react-native-modal";
@@ -16,23 +17,13 @@ import "firebase/firestore";
 import Firebase from "../../../Firebase";
 import * as FileSystem from "expo-file-system";
 
-var currentScore;
 var userid = "";
-const file = `${FileSystem.documentDirectory}/userid`;
-FileSystem.readAsStringAsync(file).then(result => {
-  userid = result;
-  db.collection("users")
-    .doc(userid)
-    .get()
-    .then(doc => {
-      currentScore = doc.data().score;
-    });
-});
 
 var db = Firebase.firestore();
 
 var username = "Sally Brown";
 var email = "sally_brown@stengg.com";
+var currentScore;
 
 export default class ProfileScreen extends Component {
   static navigationOptions = {
@@ -47,17 +38,33 @@ export default class ProfileScreen extends Component {
     isEmailModalVisible: false,
     username: username,
     email: email,
-    score: currentScore
+    score: currentScore,
+    gotBaseScore: false
   };
+
+  getBaseScore() {
+    console.log("inside getBaseScore()");
+    const file = `${FileSystem.documentDirectory}/userid`;
+    FileSystem.readAsStringAsync(file).then(result => {
+      userid = result;
+      db.collection("users")
+        .doc(userid)
+        .get()
+        .then(doc => {
+          currentScore = doc.data().score;
+          this.setState({ gotBaseScore: true });
+        });
+    });
+  }
 
   getScore() {
     currentScore = this.props.navigation.getParam("score");
-    console.log("getting score..." + currentScore)
-    this.state.score = currentScore;
+    console.log("getting score..." + currentScore);
+    this.setState({ score: currentScore });
   }
 
   getImage() {
-    console.log("generating image, currentScore is " + currentScore)
+    console.log("generating image, currentScore is " + currentScore);
     var image = "";
 
     if (currentScore == 0) {
@@ -102,73 +109,87 @@ export default class ProfileScreen extends Component {
     });
   }
 
+  componentDidMount() {
+    if (!this.state.gotBaseScore) {
+      this.getBaseScore();
+    }
+  }
+
   render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <Modal isVisible={this.state.isModalVisible}>
-          <View style={styles.center}>
-            <View style={{ paddingVertical: 30 }}>
-              <Text style={styles.h2}>Enter new name</Text>
+    if (this.state.gotBaseScore) {
+      return (
+        <View style={{ flex: 1 }}>
+          <Modal isVisible={this.state.isModalVisible}>
+            <View style={styles.center}>
+              <View style={{ paddingVertical: 30 }}>
+                <Text style={styles.h2}>Enter new name</Text>
 
-              <TextInput
-                placeholder={username}
-                onChangeText={username => this.setState({ username })}
-              />
+                <TextInput
+                  placeholder={username}
+                  onChangeText={username => this.setState({ username })}
+                />
 
-              <Button
-                title="Update"
-                onPress={() => {
-                  username = this.state.username;
-                  this.toggleModal();
-                }}
-              />
+                <Button
+                  title="Update"
+                  onPress={() => {
+                    username = this.state.username;
+                    this.toggleModal();
+                  }}
+                />
+              </View>
             </View>
-          </View>
-        </Modal>
-        <Modal isVisible={this.state.isEmailModalVisible}>
-          <View style={styles.center}>
-            <View style={{ paddingVertical: 30 }}>
-              <Text style={styles.h2}>Enter new email</Text>
+          </Modal>
+          <Modal isVisible={this.state.isEmailModalVisible}>
+            <View style={styles.center}>
+              <View style={{ paddingVertical: 30 }}>
+                <Text style={styles.h2}>Enter new email</Text>
 
-              <TextInput
-                placeholder={email}
-                onChangeText={email => this.setState({ email })}
-              />
+                <TextInput
+                  placeholder={email}
+                  onChangeText={email => this.setState({ email })}
+                />
 
-              <Button
-                title="Update"
-                onPress={() => {
-                  email = this.state.email;
-                  this.toggleEmailModal();
-                }}
-              />
+                <Button
+                  title="Update"
+                  onPress={() => {
+                    email = this.state.email;
+                    this.toggleEmailModal();
+                  }}
+                />
+              </View>
             </View>
-          </View>
-        </Modal>
-        <ScrollView>
-          <ListItem
-            title="Username"
-            subtitle={username}
-            rightAvatar={
-              <Icon name={"ios-create"} size={20} onPress={this.toggleModal} />
-            }
-          />
-          <ListItem
-            title="Email"
-            subtitle={email}
-            rightAvatar={
-              <Icon
-                name={"ios-create"}
-                size={20}
-                onPress={this.toggleEmailModal}
-              />
-            }
-          />
+          </Modal>
+          <ScrollView>
+            <ListItem
+              title="Username"
+              subtitle={username}
+              rightAvatar={
+                <Icon
+                  name={"ios-create"}
+                  size={20}
+                  onPress={this.toggleModal}
+                />
+              }
+            />
+            <ListItem
+              title="Email"
+              subtitle={email}
+              rightAvatar={
+                <Icon
+                  name={"ios-create"}
+                  size={20}
+                  onPress={this.toggleEmailModal}
+                />
+              }
+            />
 
-          {this.getImage()}
-        </ScrollView>
-      </View>
-    );
+            {this.getImage()}
+          </ScrollView>
+        </View>
+      );
+    } else {
+      return <ActivityIndicator />;
+    }
   }
 }
 

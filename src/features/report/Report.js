@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Text, View, StyleSheet } from "react-native";
+import { Button, Text, View, StyleSheet, Alert } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -51,7 +51,24 @@ export default class ReportScreen extends Component {
         />
 
         <View style={{ paddingVertical: 15 }}>
-          <Button title="Submit" onPress={() => console.log("reporting...")} />
+          <Button
+            title="Submit"
+            onPress={() =>
+              Alert.alert(
+                "Confirmation",
+                "Do you want to send this report?",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                  { text: "Send", onPress: () => this.props.navigation.navigate("Home") }
+                ],
+                { cancelable: false }
+              )
+            }
+          />
         </View>
       </View>
     );
@@ -82,7 +99,7 @@ const styles = StyleSheet.create({
   h2: {
     color: "#008BE3",
     fontSize: 16,
-    padding: 5,
+    padding: 5
   },
   remaining: {
     color: "#BBBBBB",
