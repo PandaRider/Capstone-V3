@@ -96,52 +96,6 @@ export default class ModifyBooking extends React.Component {
               onChangeText={attendees => this.setState({ attendees })}
             />
 
-            <Text style={styles.h2}>Date</Text>
-            <DatePicker
-              style={styles.picker}
-              mode="date" //The enum of date, datetime and time
-              placeholder="Select date"
-              format="DD-MM-YYYY"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              showIcon={false}
-              onDateChange={date => {
-                this.setState({ date: date });
-              }}
-            />
-
-            <Text style={styles.h2}>Time</Text>
-            <View style={styles.timeinput}>
-              <Text style={styles.h2}>Start time</Text>
-              <DatePicker
-                style={styles.picker}
-                mode="time" //The enum of date, datetime and time
-                placeholder="Select start time"
-                format="hh:mm"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                showIcon={false}
-                onDateChange={starttime => {
-                  this.setState({ starttime: starttime });
-                }}
-              />
-            </View>
-            <View style={styles.timeinput}>
-              <Text style={styles.h2}> End time </Text>
-              <DatePicker
-                style={styles.picker}
-                mode="time" //The enum of date, datetime and time
-                placeholder="Select end time"
-                format="hh:mm"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                showIcon={false}
-                onDateChange={endtime => {
-                  this.setState({ endtime: endtime });
-                }}
-              />
-            </View>
-
             <View style={{ paddingVertical: 15 }}>
               <Button title="Update" onPress={() => this.updateBooking()} />
             </View>

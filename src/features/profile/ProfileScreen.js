@@ -51,46 +51,40 @@ export default class ProfileScreen extends Component {
   };
 
   getScore() {
-    db.collection("users")
-      .doc(userid)
-      .get()
-      .then(doc => {
-        this.state.score = doc.data().score;
-      });
+    currentScore = this.props.navigation.getParam("score");
+    console.log("getting score..." + currentScore)
+    this.state.score = currentScore;
   }
 
   getImage() {
-    if (this.state.score == 0) {
-      return (
-        <Image
-          source={{
-            uri:
-              "https://www.citizenm.com/cache/images/citizenm_rott_mtg-0156_005a44cc5a24cc.jpg"
-          }}
-          style={{ width: "100%", height: 200 }}
-        />
-      );
-    } else if (this.state.score == 1) {
-      return (
-        <Image
-          source={{
-            uri:
-              "https://www.geigerfurniture.com/content/dam/ggrcom/page_assets/inspiration/ggr_uw_isp_conference_rooms_01.jpg"
-          }}
-          style={{ width: "100%", height: 200 }}
-        />
-      );
-    } else {
-      return (
-        <Image
-          source={{
-            uri:
-              "https://wearespaces.com/toby/img/meeting-rooms-half-day-rental.jpg"
-          }}
-          style={{ width: "100%", height: 200 }}
-        />
-      );
+    console.log("generating image, currentScore is " + currentScore)
+    var image = "";
+
+    if (currentScore == 0) {
+      image =
+        "https://drive.google.com/uc?id=1_bKfubAsfLfABCxuXsDJNKA4xURb-cgE";
+    } else if (currentScore == 1) {
+      image =
+        "https://drive.google.com/uc?id=1mq8c9ByD9c_q2a2Ppz902TmWsb6-p-Gg";
+    } else if (currentScore == 2) {
+      image =
+        "https://drive.google.com/uc?id=1YFLtOni7mUuYcNVpXgKFjZHiPC2DgWu-";
+    } else if (currentScore == 3) {
+      image =
+        "https://drive.google.com/uc?id=1k9xZ7LgbXCN-lclZU6zIk2wQWErSAEFG";
+    } else if (currentScore >= 4) {
+      image =
+        "https://drive.google.com/uc?id=1BeV1tn8yz9wTHezwRhrMlt1-jHUvmzSg";
     }
+
+    return (
+      <Image
+        source={{
+          uri: image
+        }}
+        style={{ width: "100%", height: 650 }}
+      />
+    );
   }
 
   toggleModal = () => {
@@ -170,9 +164,9 @@ export default class ProfileScreen extends Component {
               />
             }
           />
-        </ScrollView>
 
-        {this.getImage()}
+          {this.getImage()}
+        </ScrollView>
       </View>
     );
   }

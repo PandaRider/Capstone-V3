@@ -46,7 +46,12 @@ export default class AvailableRooms extends React.Component {
         containerStyle={styles.availableroomitem}
         chevron={true}
         onPress={() =>
-          this.props.navigation.navigate("AddBooking", { roomid: l.id })
+          this.props.navigation.navigate("AddBooking", {
+            roomid: l.id,
+            date: this.props.navigation.getParam("date"),
+            start: this.props.navigation.getParam("start"),
+            end: this.props.navigation.getParam("end")
+          })
         }
       />
     ));
@@ -60,6 +65,16 @@ export default class AvailableRooms extends React.Component {
     return (
       <View>
         <Text style={styles.h1}>Available Rooms</Text>
+        <Text style={styles.h2}>
+          Date: {this.props.navigation.getParam("date")}
+        </Text>
+        <Text style={styles.h2}>
+          Duration:{" "}
+          {this.props.navigation.getParam("start") +
+            ":00 - " +
+            this.props.navigation.getParam("end") +
+            ":00"}
+        </Text>
         <ScrollView>{this.getAvailableRoomsItem()}</ScrollView>
       </View>
     );
@@ -77,5 +92,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     paddingTop: 15
+  },
+  h2: {
+    color: "#008BE3",
+    fontSize: 16,
+    textAlign: "center"
   }
 });

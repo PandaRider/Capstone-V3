@@ -20,7 +20,7 @@ var db = Firebase.firestore();
 
 const current = {
   attendees: "6",
-  date: "13/06/2019",
+  date: "13-06-2019",
   location:
     "https://cdn2.f-cdn.com/contestentries/484655/17927409/57599f700cef0_thumb900.jpg",
   purpose: "Quality Analysis",
@@ -58,7 +58,7 @@ class Home extends React.Component {
         }
         subtitle={
           <Text>
-            {current.date} {current.time}
+            {current.date}, {current.time}
           </Text>
         }
         onPress={() =>
@@ -103,7 +103,7 @@ class Home extends React.Component {
         }
         subtitle={
           <Text>
-            {l.date} {l.time}
+            {l.date}, {l.time}
           </Text>
         }
         containerStyle={styles.upcominglistitem}

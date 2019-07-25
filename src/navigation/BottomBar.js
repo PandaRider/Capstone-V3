@@ -66,7 +66,7 @@ export default createMaterialBottomTabNavigator(
     Profile: ProfileScreen,
     Home: BookingStack,
     Chats: ChatStack,
-    Notifs: NotificationScreen,
+    // Notifs: NotificationScreen,
     Report: ReportScreen
   },
   {

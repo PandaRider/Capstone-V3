@@ -76,17 +76,21 @@ export default class BarcodeScannerExample extends React.Component {
         .collection("users")
         .doc(userid);
 
-      firebase.firestore().runTransaction(async transaction => {
-        const doc = await transaction.get(ref);
-        newScore = doc.data().score + 1;
-        transaction.update(ref, {
-          score: newScore
+      firebase
+        .firestore()
+        .runTransaction(async transaction => {
+          const doc = await transaction.get(ref);
+          newScore = doc.data().score + 1;
+          transaction.update(ref, {
+            score: newScore
+          });
+        })
+        .then(res => {
+          console.log("in scanner screen, newscore is " + newScore);
+          this.props.navigation.navigate("Profile", {
+            score: newScore
+          });
         });
-      });
-
-      this.props.navigation.navigate("Profile", {
-        score: newScore
-      });
     } else {
       alert("Verifcation failed!");
     }

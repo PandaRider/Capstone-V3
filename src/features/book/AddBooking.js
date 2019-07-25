@@ -25,8 +25,12 @@ export default class RoomDetails extends React.Component {
       charsleft: maxchars,
       purpose: "",
       attendees: "",
-      date: "",
-      time: "",
+      date: this.props.navigation.getParam("date"),
+      time:
+        this.props.navigation.getParam("start") +
+        ":00 - " +
+        this.props.navigation.getParam("end") +
+        ":00",
       gotRoom: false
     };
   }
@@ -117,6 +121,8 @@ export default class RoomDetails extends React.Component {
 
             <View style={styles.section}>
               <Text style={styles.h1}>Booking Form</Text>
+              <Text style={styles.datetime}>Date: {this.state.date}</Text>
+              <Text style={styles.datetime}>Duration: {this.state.time}</Text>
               <View style={styles.form}>
                 <Text style={styles.h2}>Purpose of booking</Text>
                 <TextInput
@@ -161,6 +167,7 @@ const styles = StyleSheet.create({
   },
   form: {
     padding: 15,
+    marginVertical: 15,
     borderColor: "#008BE3",
     borderRadius: 10,
     borderWidth: 1
@@ -183,7 +190,12 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 11,
     paddingBottom: 15,
-    textAlign: "center"
+    textAlign: "center",
+  },
+  datetime: {
+    color: "#008BE3",
+    fontSize: 16,
+    textAlign: "center",
   },
   remaining: {
     color: "#BBBBBB",

@@ -20,27 +20,27 @@ export default class DateTimePicker extends Component {
   parser() {
     // to parse date and time before it is added to firebase
     var [dday, dmonth, dyear] = this.state.date.split("-");
-    var dstart = this.state.starttime.split(":");
-    var dend = this.state.endtime.split(":");
-    console.log(this.state.date, this.state.starttime, this.state.endtime);
-    console.log(parseInt(dday), parseInt(dmonth), parseInt(dyear));
-    console.log(dstart.join(""));
-    console.log(dend.join(""));
+    var dstart = this.state.starttime;
+    var dend = this.state.endtime;
 
     dday = parseInt(dday);
     dmonth = parseInt(dmonth);
     dyear = parseInt(dyear);
-    dstart = dstart.join("");
-    dend = dend.join("");
 
+    console.log(dday, dmonth, dyear, dstart, dend);
     return dday, dmonth, dyear, dstart, dend;
   }
 
   getTimePickerItems(tval, start) {
     var tvals = [];
+
     timelimit = 25;
     if (start == true) {
       timelimit = 24;
+    }
+
+    if (this.state.date != datetoday) {
+      tval = 1
     }
 
     for (i = 0; i < timelimit - tval; i++) {
@@ -100,7 +100,13 @@ export default class DateTimePicker extends Component {
         <View style={styles.btn}>
           <Button
             title={"Confirm"}
-            onPress={() => this.props.navigation.navigate("SelectRoom")}
+            onPress={() =>
+              this.props.navigation.navigate("SelectRoom", {
+                date: this.state.date,
+                start: this.state.starttime,
+                end: this.state.endtime
+              })
+            }
           />
         </View>
       </View>
