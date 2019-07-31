@@ -6,15 +6,10 @@ import { Container, Content, Header, Body } from "native-base";
 export default props => (
   <Container>
     <Header style={styles.drawerHeader}>
-      <Body>
-        {/* <Image
-          style={styles.drawerImage}
-          source={require('./assets/DrawerIcons/Unsure-Programmer-Logo.png')} /> */}
-      </Body>
+      <Body />
     </Header>
     <Content>
       <DrawerItems {...props} />
-      {/* <Button title="Logout" onPress={DO_SOMETHING_HERE}/> */}
     </Content>
   </Container>
 );

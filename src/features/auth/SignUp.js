@@ -1,92 +1,80 @@
-import React, { Component } from 'react';
-import {
-  Platform,
-  Text,
-  View,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  ActivityIndicator,
-  Modal
-} from 'react-native';
+import React from "react";
+import { Text, View, StyleSheet, Image } from "react-native";
 
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
 
-import { fonts, colors } from '../../styles/theme'
-import { createUser } from './authActions'
+import { fonts } from "../../styles/theme";
+import { createUser } from "./authActions";
 
-import Input from '../../components/Input'
-import Button from '../../components/Button'
+import Input from "../../components/Input";
+import Button from "../../components/Button";
 
 const initialState = {
-  password: '',
-  email: '',
-}
+  password: "",
+  email: ""
+};
 
 class SignUp extends React.Component {
-  state = initialState
+  state = initialState;
 
   onChangeText = (key, value) => {
     this.setState({
       [key]: value
-    })
-  }
+    });
+  };
 
   signUp() {
-    const { password, email } = this.state
-    this.props.dispatchCreateUser(password, email)
+    const { password, email } = this.state;
+    this.props.dispatchCreateUser(password, email);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.props.auth.user !== null) {
-      this.props.navigation.navigate("App")
+    if (this.props.auth.user !== null) {
+      this.props.navigation.navigate("App");
     }
   }
 
   render() {
-    const { auth: {
-      isAuthenticating,
-      signUpError,
-      signUpErrorMessage
-    }} = this.props
+    const {
+      auth: { isAuthenticating, signUpError, signUpErrorMessage }
+    } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.heading}>
           <Image
-            source={require('../../assets/shape.png')}
+            source={require("../../assets/shape.png")}
             style={styles.headingImage}
             resizeMode="contain"
           />
         </View>
-        <Text style={styles.greeting}>
-          Welcome,
-        </Text>
-        <Text style={styles.greeting2}>
-          sign up to continue
-        </Text>
+        <Text style={styles.greeting}>Welcome,</Text>
+        <Text style={styles.greeting2}>sign up to continue</Text>
         <View style={styles.inputContainer}>
           <Input
             value={this.state.email}
             placeholder="Email"
-            type='email'
+            type="email"
             onChangeText={this.onChangeText}
           />
           <Input
             value={this.state.password}
             placeholder="Password"
             secureTextEntry
-            type='password'
+            type="password"
             onChangeText={this.onChangeText}
           />
         </View>
         <Button
-          title='Sign Up'
+          title="Sign Up"
           onPress={this.signUp.bind(this)}
           isLoading={isAuthenticating}
         />
-        <Text style={[styles.errorMessage, signUpError && { color: 'black' }]}>Error logging in. Please try again.</Text>
-        <Text style={[styles.errorMessage, signUpError && { color: 'black' }]}>{signUpErrorMessage}</Text>
+        <Text style={[styles.errorMessage, signUpError && { color: "black" }]}>
+          Error logging in. Please try again.
+        </Text>
+        <Text style={[styles.errorMessage, signUpError && { color: "black" }]}>
+          {signUpErrorMessage}
+        </Text>
       </View>
     );
   }
@@ -94,26 +82,29 @@ class SignUp extends React.Component {
 
 const mapStateToProps = state => ({
   auth: state.auth
-})
+});
 
 const mapDispatchToProps = {
   dispatchCreateUser: (password, email) => createUser(password, email)
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignUp);
 
 const styles = StyleSheet.create({
   modal: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center"
   },
   inputContainer: {
     marginTop: 20
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     paddingHorizontal: 40
   },
   greeting: {
@@ -123,12 +114,12 @@ const styles = StyleSheet.create({
   },
   greeting2: {
     fontFamily: fonts.light,
-    color: '#666',
+    color: "#666",
     fontSize: 24,
     marginTop: 5
   },
   heading: {
-    flexDirection: 'row'
+    flexDirection: "row"
   },
   headingImage: {
     width: 38,
@@ -138,6 +129,6 @@ const styles = StyleSheet.create({
     fontFamily: fonts.base,
     fontSize: 12,
     marginTop: 10,
-    color: 'transparent'
+    color: "transparent"
   }
 });

@@ -8,7 +8,7 @@ import {
   SIGN_UP_FAILURE
 } from "./authReducer";
 
-import { Alert, AsyncStorage } from "react-native";
+import { AsyncStorage } from "react-native";
 import * as firebase from "firebase";
 
 function signUp() {

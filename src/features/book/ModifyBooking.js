@@ -10,7 +10,6 @@ import {
 
 import "firebase/firestore";
 import Firebase from "../../../Firebase";
-import DatePicker from "react-native-datepicker";
 
 var db = Firebase.firestore();
 

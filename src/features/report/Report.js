@@ -63,7 +63,10 @@ export default class ReportScreen extends Component {
                     onPress: () => console.log("Cancel Pressed"),
                     style: "cancel"
                   },
-                  { text: "Send", onPress: () => this.props.navigation.navigate("Home") }
+                  {
+                    text: "Send",
+                    onPress: () => this.props.navigation.navigate("Home")
+                  }
                 ],
                 { cancelable: false }
               )

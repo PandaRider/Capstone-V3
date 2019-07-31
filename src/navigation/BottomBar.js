@@ -5,7 +5,6 @@ import Icon from "react-native-vector-icons/Ionicons";
 import ChatScreen from "../features/chat/ChatScreen";
 import UserList from "../features/chat/UserList";
 import HomeScreen from "../navigation/HomeScreen";
-import NotificationScreen from "../features/notifications/notifications";
 import ScannerScreen from "../features/qr/Scanner";
 import SelectDateTime from "../features/book/SelectDateTime";
 import SelectRoomScreen from "../features/book/SelectRoom";
@@ -14,7 +13,7 @@ import ViewBookingScreen from "../features/book/ViewBooking";
 import ModifyBookingScreen from "../features/book/ModifyBooking";
 import CurrentBookingScreen from "../features/book/CurrentBooking";
 import ProfileScreen from "../features/profile/ProfileScreen";
-import ReportScreen from '../features/report/Report';
+import ReportScreen from "../features/report/Report";
 
 const ChatStack = createStackNavigator(
   {
@@ -66,7 +65,6 @@ export default createMaterialBottomTabNavigator(
     Profile: ProfileScreen,
     Home: BookingStack,
     Chats: ChatStack,
-    // Notifs: NotificationScreen,
     Report: ReportScreen
   },
   {

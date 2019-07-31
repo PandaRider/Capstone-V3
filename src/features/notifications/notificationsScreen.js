@@ -1,14 +1,7 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 
-import { Container, Content, Icon, Header, Body } from 'native-base'
-
+import { Container, Content, Icon, Header, Body } from "native-base";
 
 // ExponentPushToken[d-5SOaPwmwib6k19lSblfe]
 
@@ -24,7 +17,7 @@ import { Container, Content, Icon, Header, Body } from 'native-base'
 //       "body": 'Some body',
 //       "sound": 'default',
 //       "badge": '1',
-//       "priority": "high", 
+//       "priority": "high",
 //       "show_in_foreground": true,
 //       "content_available": true
 //   })
@@ -37,7 +30,7 @@ import { Container, Content, Icon, Header, Body } from 'native-base'
 //           body: 'Some body',
 //           sound: 'default',
 //           badge: '1',
-//           priority: "high", 
+//           priority: "high",
 //           show_in_foreground: true,
 //           content_available: true
 //       })
@@ -49,7 +42,7 @@ import { Container, Content, Icon, Header, Body } from 'native-base'
 //   "body": "Some body",
 //   "sound": "default",
 //   "badge": "1",
-//   "priority": "high", 
+//   "priority": "high",
 //   "show_in_foreground": true,
 //   "content_available": true
 // }

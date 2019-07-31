@@ -40,7 +40,7 @@ export default class DateTimePicker extends Component {
     }
 
     if (this.state.date != datetoday) {
-      tval = 1
+      tval = 1;
     }
 
     for (i = 0; i < timelimit - tval; i++) {

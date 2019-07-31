@@ -1,23 +1,20 @@
-import React from 'react'
-import {
-  StyleSheet,
-  TextInput
-} from 'react-native'
+import React from "react";
+import { StyleSheet, TextInput } from "react-native";
 
-import { colors, fonts } from '../styles/theme'
+import { colors, fonts } from "../styles/theme";
 
 export default ({ placeholder, onChangeText, type, ...props }) => (
   <TextInput
-    autoCapitalize='none'
+    autoCapitalize="none"
     autoCorrect={false}
     style={[styles.input]}
     placeholder={placeholder}
     placeholderTextColor="#a0a0a0"
     onChangeText={value => onChangeText(type, value)}
-    underlineColorAndroid='transparent'
+    underlineColorAndroid="transparent"
     {...props}
   />
-)
+);
 
 const styles = StyleSheet.create({
   input: {
@@ -28,4 +25,4 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.primary,
     fontFamily: fonts.light
   }
-})
+});

@@ -190,12 +190,12 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 11,
     paddingBottom: 15,
-    textAlign: "center",
+    textAlign: "center"
   },
   datetime: {
     color: "#008BE3",
     fontSize: 16,
-    textAlign: "center",
+    textAlign: "center"
   },
   remaining: {
     color: "#BBBBBB",

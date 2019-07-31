@@ -1,26 +1,26 @@
-import React from 'react'
-import { Image, StyleSheet } from 'react-native'
-import { createBottomTabNavigator } from 'react-navigation'
+import React from "react";
+import { Image, StyleSheet } from "react-native";
+import { createBottomTabNavigator } from "react-navigation";
 
-import { colors, fonts } from '../../styles/theme'
-import SignIn from './SignIn'
-import SignUp from './SignUp'
+import { colors, fonts } from "../../styles/theme";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 const styles = StyleSheet.create({
   icon: {
     width: 26,
     height: 26
   }
-})
+});
 
 const routes = {
   SignIn: {
     screen: SignIn,
     navigationOptions: {
-      title: 'Sign In',
+      title: "Sign In",
       tabBarIcon: ({ tintColor }) => (
         <Image
-          source={require('../../assets/signInButton.png')}
+          source={require("../../assets/signInButton.png")}
           style={[styles.icon, { tintColor }]}
         />
       )
@@ -29,20 +29,20 @@ const routes = {
   SignUp: {
     screen: SignUp,
     navigationOptions: {
-      title: 'Sign Up',
+      title: "Sign Up",
       tabBarIcon: ({ tintColor }) => (
         <Image
-          source={require('../../assets/signUpButton.png')}
+          source={require("../../assets/signUpButton.png")}
           style={[styles.icon, { tintColor }]}
         />
       )
     }
   }
-}
+};
 
 const routeConfig = {
-  initialRouteName: 'SignIn',
-  tabBarPosition: 'bottom',
+  initialRouteName: "SignIn",
+  tabBarPosition: "bottom",
   tabBarOptions: {
     showLabel: true,
     activeTintColor: colors.primary,
@@ -53,12 +53,12 @@ const routeConfig = {
       fontSize: 12
     },
     style: {
-      backgroundColor: 'white',
+      backgroundColor: "white",
       borderTopWidth: 0,
       paddingBottom: 3
-    },
+    }
   }
-}
+};
 
 // export default createAppContainer(createBottomTabNavigator(routes, routeConfig))
-export default createBottomTabNavigator(routes, routeConfig)
+export default createBottomTabNavigator(routes, routeConfig);

@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { Text, View, TextInput, StyleSheet, Image, Modal } from "react-native";
 import { connect } from "react-redux";
-import * as firebase from "firebase";
 
 import { signIn } from "./authActions";
-import { fonts, colors } from "../../styles/theme";
+import { fonts } from "../../styles/theme";
 
 import Input from "../../components/Input";
 import Button from "../../components/Button";
