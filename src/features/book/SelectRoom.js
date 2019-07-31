@@ -87,14 +87,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1
   },
   h1: {
-    color: "#008BE3",
+    color: "#EF7568",
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
     paddingTop: 15
   },
   h2: {
-    color: "#008BE3",
+    color: "#EF7568",
     fontSize: 16,
     textAlign: "center"
   }

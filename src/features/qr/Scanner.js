@@ -51,6 +51,7 @@ export default class BarcodeScannerExample extends React.Component {
         />
         {scanned && (
           <Button
+            color="#EF7568"
             title={"Tap to Scan Again"}
             onPress={() => this.setState({ scanned: false })}
           />

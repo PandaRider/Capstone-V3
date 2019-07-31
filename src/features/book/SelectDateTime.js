@@ -100,6 +100,7 @@ export default class DateTimePicker extends Component {
         <View style={styles.btn}>
           <Button
             title={"Confirm"}
+            color="#EF7568"
             onPress={() =>
               this.props.navigation.navigate("SelectRoom", {
                 date: this.state.date,
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     paddingTop: 50
   },
   h1: {
-    color: "#008BE3",
+    color: "#EF7568",
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5
   },
   h2: {
-    color: "#008BE3",
+    color: "#EF7568",
     fontSize: 16,
     paddingHorizontal: 20
   },

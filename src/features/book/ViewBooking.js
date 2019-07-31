@@ -104,6 +104,7 @@ export default class ViewBooking extends React.Component {
           </ScrollView>
           <View style={styles.alignbtns}>
             <Button
+              color="#EF7568"
               title="Modify booking"
               onPress={() =>
                 this.props.navigation.navigate("ModifyBooking", {
@@ -113,6 +114,7 @@ export default class ViewBooking extends React.Component {
             />
             <Button
               title="Cancel booking"
+              color="#EF7568"
               onPress={() => {
                 Alert.alert(
                   "Cancel Booking",
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   h1: {
-    color: "#008BE3",
+    color: "#EF7568",
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",

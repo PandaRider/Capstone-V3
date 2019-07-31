@@ -125,11 +125,13 @@ export default class ProfileScreen extends Component {
                 <Text style={styles.h2}>Enter new name</Text>
 
                 <TextInput
+                  style={styles.input}
                   placeholder={username}
                   onChangeText={username => this.setState({ username })}
                 />
 
                 <Button
+                  color="#EF7568"
                   title="Update"
                   onPress={() => {
                     username = this.state.username;
@@ -145,11 +147,13 @@ export default class ProfileScreen extends Component {
                 <Text style={styles.h2}>Enter new email</Text>
 
                 <TextInput
+                  style={styles.input}
                   placeholder={email}
                   onChangeText={email => this.setState({ email })}
                 />
 
                 <Button
+                  color="#EF7568"
                   title="Update"
                   onPress={() => {
                     email = this.state.email;
@@ -199,7 +203,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   h2: {
-    color: "#008BE3",
+    color: "#EF7568",
     fontSize: 16
+  },
+  input: {
+    paddingVertical: 10
   }
 });

@@ -70,6 +70,6 @@ export default createMaterialBottomTabNavigator(
   {
     initialRouteName: "Home",
     shifting: true,
-    barStyle: { backgroundColor: "#008BE3" }
+    barStyle: { backgroundColor: "#EF7568" }
   }
 );

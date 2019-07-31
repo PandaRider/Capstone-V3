@@ -1,7 +1,6 @@
 import React from "react";
-import { Text, View, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
-import { GiftedChat } from "react-native-gifted-chat";
+import { Text, View, StyleSheet, Button } from "react-native";
+import { Bubble, GiftedChat } from "react-native-gifted-chat";
 
 import "firebase/firestore";
 import Firebase from "../../../Firebase";
@@ -86,12 +85,28 @@ export default class ChatScreen extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.view}>
-        <Button onPress={() => navigate("Users")} title="Return to Chats" />
+        <Button
+          color="#EF7568"
+          title={"Return to Chats"}
+          onPress={() => navigate("Users")}
+        />
         <Text style={styles.colleague}>
           {this.props.navigation.getParam("colleaguename")}
         </Text>
         <GiftedChat
           messages={this.state.messages}
+          renderBubble={props => {
+            return (
+              <Bubble
+                {...props}
+                wrapperStyle={{
+                  right: {
+                    backgroundColor: "#EF7568"
+                  }
+                }}
+              />
+            );
+          }}
           onSend={messages => this.addMessage(messages)}
           user={{
             _id: userid
@@ -114,3 +129,5 @@ const styles = StyleSheet.create({
     padding: 10
   }
 });
+
+// https://github.com/FaridSafi/react-native-gifted-chat/issues/672

@@ -52,6 +52,7 @@ export default class ReportScreen extends Component {
 
         <View style={{ paddingVertical: 15 }}>
           <Button
+            color="#EF7568"
             title="Submit"
             onPress={() =>
               Alert.alert(
@@ -93,14 +94,14 @@ const styles = StyleSheet.create({
     padding: 10
   },
   h1: {
-    color: "#008BE3",
+    color: "#EF7568",
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
     paddingVertical: 5
   },
   h2: {
-    color: "#008BE3",
+    color: "#EF7568",
     fontSize: 16,
     padding: 5
   },

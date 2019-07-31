@@ -96,7 +96,7 @@ export default class ModifyBooking extends React.Component {
             />
 
             <View style={{ paddingVertical: 15 }}>
-              <Button title="Update" onPress={() => this.updateBooking()} />
+              <Button color="#EF7568" title="Update" onPress={() => this.updateBooking()} />
             </View>
           </View>
         </View>
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   form: {
     padding: 15,
-    borderColor: "#008BE3",
+    borderColor: "#EF7568",
     borderRadius: 10,
     borderWidth: 1
   },
@@ -122,14 +122,14 @@ const styles = StyleSheet.create({
     padding: 10
   },
   h1: {
-    color: "#008BE3",
+    color: "#EF7568",
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
     paddingVertical: 5
   },
   h2: {
-    color: "#008BE3",
+    color: "#EF7568",
     fontSize: 16,
     padding: 5,
     fontWeight: "bold"

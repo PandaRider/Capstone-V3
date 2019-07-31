@@ -86,6 +86,7 @@ export default class CurrentBooking extends React.Component {
           </ScrollView>
           <View style={styles.alignbtns}>
             <Button
+              color="#EF7568"
               title="End Now"
               onPress={() =>
                 Alert.alert(
@@ -112,6 +113,7 @@ export default class CurrentBooking extends React.Component {
             />
             <Button
               title="Scan QR"
+              color="#EF7568"
               onPress={() =>
                 this.props.navigation.navigate("Scanner", {
                   room: details.room
@@ -133,7 +135,7 @@ const styles = StyleSheet.create({
     padding: 15
   },
   h1: {
-    color: "#008BE3",
+    color: "#EF7568",
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",

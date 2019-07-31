@@ -144,10 +144,10 @@ class Home extends React.Component {
             <Text style={styles.niltext}>No upcoming sessions</Text>
           )}
           <View style={styles.bottomview}>
-            <Button title={"Logout"} onPress={this.logout.bind(this)} />
+            <Button title={"Logout"} color="#EF7568" onPress={this.logout.bind(this)} />
           </View>
           <ActionButton
-            buttonColor="#1253BC"
+            buttonColor="#EF7568"
             onPress={() => this.props.navigation.navigate("SelectDateTime")}
           />
         </View>
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 10,
     margin: 10,
-    borderColor: "#008BE3",
+    borderColor: "#EF7568",
     borderRadius: 10,
     borderWidth: 1
   },
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1
   },
   h1: {
-    color: "#008BE3",
+    color: "#EF7568",
     fontSize: 18,
     fontWeight: "bold",
     paddingLeft: 15
