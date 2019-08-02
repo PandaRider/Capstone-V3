@@ -19,6 +19,11 @@ var maxchars = 30;
 var details = {};
 
 export default class RoomDetails extends React.Component {
+  static navigationOptions = {
+    title: "Enter Booking Details",
+    headerTintColor: "#EF7568"
+  };
+
   constructor(props) {
     super(props);
     this.state = {

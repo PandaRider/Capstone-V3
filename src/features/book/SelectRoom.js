@@ -9,6 +9,11 @@ import Firebase from "../../../Firebase";
 var db = Firebase.firestore();
 
 export default class AvailableRooms extends React.Component {
+  static navigationOptions = {
+    title: "Select Room",
+    headerTintColor: "#EF7568"
+  };
+
   state = {
     availableList: []
   };

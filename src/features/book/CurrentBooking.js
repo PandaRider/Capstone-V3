@@ -15,6 +15,11 @@ import Icon from "react-native-vector-icons/Ionicons";
 var details = {};
 
 export default class CurrentBooking extends React.Component {
+  static navigationOptions = {
+    title: "Current Booking",
+    headerTintColor: "#EF7568"
+  };
+
   state = {
     gotBooking: false
   };
@@ -86,6 +91,15 @@ export default class CurrentBooking extends React.Component {
           </ScrollView>
           <View style={styles.alignbtns}>
             <Button
+              title="Start Use"
+              color="#EF7568"
+              onPress={() =>
+                this.props.navigation.navigate("Scanner", {
+                  room: details.room
+                })
+              }
+            />
+            <Button
               color="#EF7568"
               title="End Now"
               onPress={() =>
@@ -109,15 +123,6 @@ export default class CurrentBooking extends React.Component {
                   ],
                   { cancelable: false }
                 )
-              }
-            />
-            <Button
-              title="Scan QR"
-              color="#EF7568"
-              onPress={() =>
-                this.props.navigation.navigate("Scanner", {
-                  room: details.room
-                })
               }
             />
           </View>

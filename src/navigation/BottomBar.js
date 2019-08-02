@@ -9,7 +9,7 @@ import ScannerScreen from "../features/qr/Scanner";
 import SelectDateTime from "../features/book/SelectDateTime";
 import SelectRoomScreen from "../features/book/SelectRoom";
 import AddBookingScreen from "../features/book/AddBooking";
-import ViewBookingScreen from "../features/book/ViewBooking";
+import UpcomingBookingScreen from "../features/book/UpcomingBooking";
 import ModifyBookingScreen from "../features/book/ModifyBooking";
 import CurrentBookingScreen from "../features/book/CurrentBooking";
 import ProfileScreen from "../features/profile/ProfileScreen";
@@ -45,7 +45,7 @@ const BookingStack = createStackNavigator(
     SelectDateTime: SelectDateTime,
     SelectRoom: SelectRoomScreen,
     AddBooking: AddBookingScreen,
-    ViewBooking: ViewBookingScreen,
+    UpcomingBooking: UpcomingBookingScreen,
     ModifyBooking: ModifyBookingScreen,
     CurrentBooking: CurrentBookingScreen,
     Scanner: ScannerScreen
@@ -62,8 +62,8 @@ const BookingStack = createStackNavigator(
 
 export default createMaterialBottomTabNavigator(
   {
-    Profile: ProfileScreen,
     Home: BookingStack,
+    Profile: ProfileScreen,
     Chats: ChatStack,
     Report: ReportScreen
   },

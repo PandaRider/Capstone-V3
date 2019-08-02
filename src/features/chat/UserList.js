@@ -15,6 +15,7 @@ export default class ChatScreen extends React.Component {
 
   getColleagueList = () => {
     db.collection("users")
+      .orderBy("name")
       .get()
       .then(snapshot => {
         const items = [];
@@ -58,6 +59,7 @@ export default class ChatScreen extends React.Component {
     if (this.state.gotColleagueList == true) {
       return (
         <View style={styles.view}>
+          <Text style={styles.h1}>All Chats</Text>
           <ScrollView>{this.getColleagueListItem()}</ScrollView>
         </View>
       );
@@ -73,18 +75,26 @@ export default class ChatScreen extends React.Component {
 
 const styles = StyleSheet.create({
   view: {
-    flex: 1
+    flex: 1,
+    padding: 15
+  },
+  h1: {
+    color: "#EF7568",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    paddingVertical: 5
   },
   item: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 15,
-    margin: 2,
-    backgroundColor: "#EF7568",
+    padding: 10,
+    margin: 5,
+    backgroundColor: "#fff",
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#fff",
-    color: "white"
+    borderColor: "#EF7568",
+    color: "#EF7568"
   }
 });

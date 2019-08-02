@@ -17,6 +17,11 @@ var maxchars = 30;
 var details = {};
 
 export default class ModifyBooking extends React.Component {
+  static navigationOptions = {
+    title: "Modify Booking",
+    headerTintColor: "#EF7568"
+  };
+
   state = {
     charsleft: maxchars,
     purpose: "",

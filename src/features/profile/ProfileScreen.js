@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Button,
   Text,
   View,
   StyleSheet,
@@ -9,8 +8,7 @@ import {
   ActivityIndicator
 } from "react-native";
 import { ListItem } from "react-native-elements";
-import Modal from "react-native-modal";
-import { TextInput } from "react-native-gesture-handler";
+import DialogInput from "react-native-dialog-input";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import "firebase/firestore";
@@ -34,16 +32,15 @@ export default class ProfileScreen extends Component {
   };
 
   state = {
-    isModalVisible: false,
-    isEmailModalVisible: false,
-    username: username,
-    email: email,
+    nameVisible: false,
+    emailVisible: false,
+    nameFilled: true,
+    emailFilled: true,
     score: currentScore,
     gotBaseScore: false
   };
 
   getBaseScore() {
-    console.log("inside getBaseScore()");
     const file = `${FileSystem.documentDirectory}/userid`;
     FileSystem.readAsStringAsync(file).then(result => {
       userid = result;
@@ -59,12 +56,10 @@ export default class ProfileScreen extends Component {
 
   getScore() {
     currentScore = this.props.navigation.getParam("score");
-    console.log("getting score..." + currentScore);
     this.setState({ score: currentScore });
   }
 
   getImage() {
-    console.log("generating image, currentScore is " + currentScore);
     var image = "";
 
     if (currentScore == 0) {
@@ -94,12 +89,20 @@ export default class ProfileScreen extends Component {
     );
   }
 
-  toggleModal = () => {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
+  toggleName = () => {
+    this.setState({ nameVisible: !this.state.nameVisible });
   };
 
-  toggleEmailModal = () => {
-    this.setState({ isEmailModalVisible: !this.state.isEmailModalVisible });
+  toggleEmail = () => {
+    this.setState({ emailVisible: !this.state.emailVisible });
+  };
+
+  toggleNameFilled = () => {
+    this.setState({ nameFilled: !this.state.nameFilled });
+  };
+
+  toggleEmailFilled = () => {
+    this.setState({ emailFilled: !this.state.emailFilled });
   };
 
   componentWillMount() {
@@ -118,61 +121,73 @@ export default class ProfileScreen extends Component {
   render() {
     if (this.state.gotBaseScore) {
       return (
-        <View style={{ flex: 1 }}>
-          <Modal isVisible={this.state.isModalVisible}>
-            <View style={styles.center}>
-              <View style={{ paddingVertical: 30 }}>
-                <Text style={styles.h2}>Enter new name</Text>
+        <View style={styles.view}>
+          <Text style={styles.h1}>Profile</Text>
 
-                <TextInput
-                  style={styles.input}
-                  placeholder={username}
-                  onChangeText={username => this.setState({ username })}
-                />
+          <DialogInput
+            isDialogVisible={this.state.nameVisible}
+            title={"Edit Name"}
+            message={
+              this.state.nameFilled ? "Enter new name" : "New name is required"
+            }
+            hintInput={username}
+            submitInput={text => {
+              if (text == "") {
+                if (this.state.nameFilled) {
+                  this.toggleNameFilled();
+                }
+              } else {
+                username = text;
+                if (!this.state.nameFilled) {
+                  this.toggleNameFilled();
+                }
+                this.toggleName();
+              }
+            }}
+            closeDialog={() => {
+              if (!this.state.nameFilled) {
+                this.toggleNameFilled();
+              }
+              this.toggleName();
+            }}
+          />
 
-                <Button
-                  color="#EF7568"
-                  title="Update"
-                  onPress={() => {
-                    username = this.state.username;
-                    this.toggleModal();
-                  }}
-                />
-              </View>
-            </View>
-          </Modal>
-          <Modal isVisible={this.state.isEmailModalVisible}>
-            <View style={styles.center}>
-              <View style={{ paddingVertical: 30 }}>
-                <Text style={styles.h2}>Enter new email</Text>
+          <DialogInput
+            isDialogVisible={this.state.emailVisible}
+            title={"Edit Email"}
+            message={
+              this.state.emailFilled
+                ? "Enter new email"
+                : "New email is required"
+            }
+            hintInput={email}
+            submitInput={text => {
+              if (text == "") {
+                if (this.state.emailFilled) {
+                  this.toggleEmailFilled();
+                }
+              } else {
+                email = text;
+                if (!this.state.emailFilled) {
+                  this.toggleEmailFilled();
+                }
+                this.toggleEmail();
+              }
+            }}
+            closeDialog={() => {
+              if (!this.state.emailFilled) {
+                this.toggleEmailFilled();
+              }
+              this.toggleEmail();
+            }}
+          />
 
-                <TextInput
-                  style={styles.input}
-                  placeholder={email}
-                  onChangeText={email => this.setState({ email })}
-                />
-
-                <Button
-                  color="#EF7568"
-                  title="Update"
-                  onPress={() => {
-                    email = this.state.email;
-                    this.toggleEmailModal();
-                  }}
-                />
-              </View>
-            </View>
-          </Modal>
           <ScrollView>
             <ListItem
               title="Username"
               subtitle={username}
               rightAvatar={
-                <Icon
-                  name={"ios-create"}
-                  size={20}
-                  onPress={this.toggleModal}
-                />
+                <Icon name={"ios-create"} size={20} onPress={this.toggleName} />
               }
             />
             <ListItem
@@ -182,11 +197,15 @@ export default class ProfileScreen extends Component {
                 <Icon
                   name={"ios-create"}
                   size={20}
-                  onPress={this.toggleEmailModal}
+                  onPress={this.toggleEmail}
                 />
               }
             />
 
+            <Text style={styles.beanstalk}>My Beanstalk Growth</Text>
+            <Text style={{ textAlign: "center", paddingBottom: 10 }}>
+              Current room usage streak is at {currentScore}!
+            </Text>
             {this.getImage()}
           </ScrollView>
         </View>
@@ -198,15 +217,40 @@ export default class ProfileScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  view: {
+    flex: 1,
+    padding: 15,
+    backgroundColor: "#fff"
+  },
   center: {
     alignItems: "center",
+    backgroundColor: "white"
+  },
+  h1: {
+    color: "#EF7568",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    paddingVertical: 5,
     backgroundColor: "white"
   },
   h2: {
     color: "#EF7568",
     fontSize: 16
   },
+  beanstalk: {
+    color: "#EF7568",
+    fontSize: 16,
+    paddingBottom: 10,
+    textAlign: "center"
+  },
   input: {
     paddingVertical: 10
+  },
+
+  alignbtns: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 10
   }
 });

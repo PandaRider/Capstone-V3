@@ -12,6 +12,11 @@ var timestart = hours;
 var timeend = hours + 1;
 
 export default class DateTimePicker extends Component {
+  static navigationOptions = {
+    title: "Select Date and Time",
+    headerTintColor: "#EF7568"
+  };
+
   constructor(props) {
     super(props);
     this.state = { date: datetoday, starttime: timestart, endtime: timeend };

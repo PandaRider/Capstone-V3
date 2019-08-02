@@ -31,6 +31,11 @@ const current = {
 };
 
 class Home extends React.Component {
+  static navigationOptions = {
+    title: "All Bookings",
+    headerTintColor: "#EF7568"
+  };
+
   state = {
     username: "",
     isLoggedIn: true,
@@ -108,7 +113,7 @@ class Home extends React.Component {
         }
         containerStyle={styles.upcominglistitem}
         onPress={() =>
-          this.props.navigation.navigate("ViewBooking", { bookingid: l.id })
+          this.props.navigation.navigate("UpcomingBooking", { bookingid: l.id })
         }
       />
     ));
@@ -130,24 +135,42 @@ class Home extends React.Component {
       return (
         <View style={styles.view}>
           <View style={styles.currentview}>
-            <Text style={styles.h1}>Current Session</Text>
+            <Text style={styles.h1}>My Current Bookings</Text>
             {this.state.hasCurrent ? (
               this.getCurrentBooking()
             ) : (
-              <Text style={styles.niltext}>No current session</Text>
+              <Text style={styles.niltext}>No current booking</Text>
             )}
           </View>
-          <Text style={styles.h1}>Upcoming Sessions</Text>
+          <Text style={styles.h1}>My Upcoming Bookings</Text>
           {this.state.hasUpcoming ? (
             <ScrollView>{this.getUpcomingBookingsItem()}</ScrollView>
           ) : (
-            <Text style={styles.niltext}>No upcoming sessions</Text>
+            <Text style={styles.niltext}>No upcoming bookings</Text>
           )}
           <View style={styles.bottomview}>
-            <Button title={"Logout"} color="#EF7568" onPress={this.logout.bind(this)} />
+            <Button
+              title={"Logout"}
+              color="#EF7568"
+              onPress={this.logout.bind(this)}
+            />
           </View>
           <ActionButton
-            buttonColor="#EF7568"
+            size={70}
+            buttonText="New Booking"
+            buttonTextStyle={{ fontSize: 15, textAlign: "center" }}
+            buttonColor="#f85441"
+            shadowStyle={{
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 2
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+
+              elevation: 0
+            }}
             onPress={() => this.props.navigation.navigate("SelectDateTime")}
           />
         </View>
