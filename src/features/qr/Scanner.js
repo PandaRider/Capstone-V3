@@ -12,7 +12,6 @@ import * as FileSystem from "expo-file-system";
 var userid = "";
 const file = `${FileSystem.documentDirectory}/userid`;
 FileSystem.readAsStringAsync(file).then(result => {
-  console.log("chat uid exists: " + result);
   userid = result;
 });
 
@@ -87,7 +86,6 @@ export default class BarcodeScannerExample extends React.Component {
           });
         })
         .then(res => {
-          console.log("in scanner screen, newscore is " + newScore);
           this.props.navigation.navigate("Profile", {
             score: newScore
           });

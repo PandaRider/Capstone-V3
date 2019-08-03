@@ -152,7 +152,7 @@ export default class ViewBooking extends React.Component {
     } else {
       return (
         <View style={styles.centre}>
-          <ActivityIndicator size="large" />
+          <ActivityIndicator />
         </View>
       );
     }

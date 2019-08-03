@@ -16,7 +16,6 @@ import Firebase from "../../../Firebase";
 import * as FileSystem from "expo-file-system";
 
 var userid = "";
-
 var db = Firebase.firestore();
 
 var username = "Sally Brown";

@@ -40,7 +40,6 @@ export default class AvailableRooms extends React.Component {
     return this.state.availableList.map((l, i) => (
       <ListItem
         key={i}
-        // leftAvatar={{ source: require("../../assets/stlounge.jpg") }}
         leftAvatar={{ source: { uri: l.image } }}
         title={l.room}
         subtitle={

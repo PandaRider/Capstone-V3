@@ -14,8 +14,6 @@ import "firebase/firestore";
 import Firebase from "../../../Firebase";
 
 var db = Firebase.firestore();
-
-var maxchars = 30;
 var details = {};
 
 export default class RoomDetails extends React.Component {
@@ -27,7 +25,6 @@ export default class RoomDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      charsleft: maxchars,
       purpose: "",
       attendees: "",
       date: this.props.navigation.getParam("date"),
@@ -36,7 +33,9 @@ export default class RoomDetails extends React.Component {
         ":00 - " +
         this.props.navigation.getParam("end") +
         ":00",
-      gotRoom: false
+      gotRoom: false,
+      checkPurpose: true,
+      checkAttendees: true
     };
   }
 
@@ -81,7 +80,6 @@ export default class RoomDetails extends React.Component {
         level: details.level
       })
       .then(ref => {
-        console.log("Added document with ID: ", ref.id);
         this.setBookingId(ref.id);
         this.props.navigation.navigate("Home", { bookingid: ref.id });
       });
@@ -132,28 +130,55 @@ export default class RoomDetails extends React.Component {
                 <Text style={styles.h2}>Purpose of booking</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="Enter text here"
-                  maxLength={maxchars}
-                  onChangeText={purpose =>
-                    this.setState({
-                      purpose,
-                      charsleft: maxchars - purpose.length
-                    })
-                  }
+                  placeholder="Enter purpose of booking"
+                  onChangeText={purpose => this.setState({ purpose })}
                 />
-                <Text style={styles.remaining}>{this.state.charsleft}</Text>
 
                 <Text style={styles.h2}>Number of attendees</Text>
                 <TextInput
                   style={styles.input}
-                  placeholder="Enter value here"
+                  placeholder="Enter number of attendees"
                   keyboardType="numeric"
                   onChangeText={attendees => this.setState({ attendees })}
                 />
 
-                <Text style={styles.warning}>All fields are required.</Text>
+                {this.state.checkPurpose ? (
+                  <View />
+                ) : (
+                  <Text style={styles.warning}>All fields are required.</Text>
+                )}
 
-                <Button title="Book" color="#EF7568" onPress={() => this.makeBooking()} />
+                {this.state.checkAttendees ? (
+                  <View />
+                ) : (
+                  <Text style={styles.warning}>
+                    Invalid number of attendees.
+                  </Text>
+                )}
+
+                <Button
+                  title="Book"
+                  color="#EF7568"
+                  onPress={() => {
+                    if (
+                      this.state.purpose == "" ||
+                      this.state.attendees == ""
+                    ) {
+                      this.setState({ checkPurpose: false });
+                    } else if (
+                      parseInt(this.state.attendees) < 1 ||
+                      parseInt(this.state.attendees) >
+                        parseInt(details.capacity)
+                    ) {
+                      this.setState({ checkPurpose: true });
+                      this.setState({ checkAttendees: false });
+                    } else {
+                      this.setState({ checkPurpose: true });
+                      this.setState({ checkPurpose: true });
+                      this.makeBooking();
+                    }
+                  }}
+                />
               </View>
             </View>
           </ScrollView>

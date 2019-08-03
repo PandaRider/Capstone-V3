@@ -66,7 +66,7 @@ export default class ChatScreen extends React.Component {
     } else {
       return (
         <View>
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator />
         </View>
       );
     }

@@ -32,7 +32,6 @@ export default class DateTimePicker extends Component {
     dmonth = parseInt(dmonth);
     dyear = parseInt(dyear);
 
-    console.log(dday, dmonth, dyear, dstart, dend);
     return dday, dmonth, dyear, dstart, dend;
   }
 
@@ -40,12 +39,14 @@ export default class DateTimePicker extends Component {
     var tvals = [];
 
     timelimit = 25;
-    if (start == true) {
+    if (start) {
       timelimit = 24;
     }
 
     if (this.state.date != datetoday) {
-      tval = 1;
+      if (start) {
+        tval = 1;
+      }
     }
 
     for (i = 0; i < timelimit - tval; i++) {
@@ -77,7 +78,7 @@ export default class DateTimePicker extends Component {
             this.setState({ date: date });
           }}
         />
-        <Text style={styles.h1}>Select Duration</Text>
+        <Text style={styles.h1}>Select Time</Text>
         <View style={styles.timeinput}>
           <Text style={styles.h2}>Start time</Text>
           <Picker

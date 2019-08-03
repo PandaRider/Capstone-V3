@@ -9,7 +9,6 @@ import * as FileSystem from "expo-file-system";
 var userid = "";
 const file = `${FileSystem.documentDirectory}/userid`;
 FileSystem.readAsStringAsync(file).then(result => {
-  console.log("chat uid exists: " + result);
   userid = result;
 });
 
@@ -23,7 +22,6 @@ export default class ChatScreen extends React.Component {
 
   sender = {
     _id: userid
-    // name: "" // without 'avatar' prop, the name initials will be rendered instead
   };
 
   getMessageList = () => {
@@ -47,7 +45,7 @@ export default class ChatScreen extends React.Component {
       .add({
         _id: messages[0]._id,
         text: messages[0].text,
-        createdAt: new Date().toString(), // firestore converts new Date() to a Timestamp which will not be parsed correctly by gifted-chat, hence need toString()
+        createdAt: new Date().toString(),
         user: this.sender
       })
       .then(this.getMessageList());
@@ -55,7 +53,6 @@ export default class ChatScreen extends React.Component {
 
   getChat = () => {
     var colleagueid = this.props.navigation.getParam("colleagueid");
-    console.log(userid, "and", colleagueid);
     var database;
     if (userid < colleagueid) {
       database = userid + colleagueid;
@@ -74,7 +71,6 @@ export default class ChatScreen extends React.Component {
   };
 
   componentDidMount() {
-    // https://reactnavigation.org/docs/en/function-after-focusing-screen.html
     const { navigation } = this.props;
     this.focusListener = navigation.addListener("didFocus", () => {
       this.getChat();

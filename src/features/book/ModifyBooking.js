@@ -101,7 +101,11 @@ export default class ModifyBooking extends React.Component {
             />
 
             <View style={{ paddingVertical: 15 }}>
-              <Button color="#EF7568" title="Update" onPress={() => this.updateBooking()} />
+              <Button
+                color="#EF7568"
+                title="Update"
+                onPress={() => this.updateBooking()}
+              />
             </View>
           </View>
         </View>
