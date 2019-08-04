@@ -65,7 +65,7 @@ export default class ModifyBooking extends React.Component {
         date: this.state.date,
         time: this.state.time
       });
-    this.props.navigation.navigate("ViewBooking", { bookingid: details.id });
+    this.props.navigation.navigate("UpcomingBooking", { bookingid: details.id });
   }
 
   componentWillMount() {
