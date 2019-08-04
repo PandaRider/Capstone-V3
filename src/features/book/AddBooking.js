@@ -125,7 +125,7 @@ export default class RoomDetails extends React.Component {
             <View style={styles.section}>
               <Text style={styles.h1}>Booking Form</Text>
               <Text style={styles.datetime}>Date: {this.state.date}</Text>
-              <Text style={styles.datetime}>Duration: {this.state.time}</Text>
+              <Text style={styles.datetime}>Time: {this.state.time}</Text>
               <View style={styles.form}>
                 <Text style={styles.h2}>Purpose of booking</Text>
                 <TextInput

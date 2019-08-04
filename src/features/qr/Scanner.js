@@ -48,13 +48,6 @@ export default class BarcodeScannerExample extends React.Component {
           onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
           style={StyleSheet.absoluteFillObject}
         />
-        {scanned && (
-          <Button
-            color="#EF7568"
-            title={"Tap to Scan Again"}
-            onPress={() => this.setState({ scanned: false })}
-          />
-        )}
         <View style={styles.center}>
           <View style={styles.qrbox} />
         </View>

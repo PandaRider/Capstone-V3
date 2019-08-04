@@ -16,16 +16,25 @@ import { logOutAndClearToken } from "../features/auth/authActions";
 import "firebase/firestore";
 import Firebase from "../../Firebase";
 
+var day = new Date().getDate(); //Current Date
+var month = new Date().getMonth() + 1; //Current Month
+var year = new Date().getFullYear(); //Current Year
+var datetoday = day + "-" + month + "-" + year;
+
+var hours = new Date().getHours(); //Current Hours
+var timestart = hours;
+var timeend = hours + 1;
+
 var db = Firebase.firestore();
 
 const current = {
   attendees: "6",
-  date: "13-06-2019",
+  date: datetoday,
   location:
     "https://cdn2.f-cdn.com/contestentries/484655/17927409/57599f700cef0_thumb900.jpg",
   purpose: "Quality Analysis",
   room: "Onyx Room",
-  time: "9:00 - 12:00",
+  time: timestart + ":00 - " + timeend + ":00",
   id: "mToRcBgct3DyFWbLry4V",
   level: "8"
 };
@@ -40,7 +49,6 @@ class Home extends React.Component {
     username: "",
     isLoggedIn: true,
     user: {},
-    // Implement check for current
     hasCurrent: true,
     gotUpcoming: false,
     hasUpcoming: false,

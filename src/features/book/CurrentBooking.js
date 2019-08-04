@@ -21,7 +21,8 @@ export default class CurrentBooking extends React.Component {
   };
 
   state = {
-    gotBooking: false
+    gotBooking: false,
+    startedUse: false
   };
 
   getBookingDetails() {
@@ -43,6 +44,7 @@ export default class CurrentBooking extends React.Component {
           <Text style={styles.h1}>
             {details.purpose} @ {details.room}
           </Text>
+
           <ScrollView>
             <ListItem
               key={0}
@@ -89,16 +91,8 @@ export default class CurrentBooking extends React.Component {
               style={{ width: "100%", height: 200 }}
             />
           </ScrollView>
+
           <View style={styles.alignbtns}>
-            <Button
-              title="Start Use"
-              color="#EF7568"
-              onPress={() =>
-                this.props.navigation.navigate("Scanner", {
-                  room: details.room
-                })
-              }
-            />
             <Button
               color="#EF7568"
               title="End Now"
@@ -123,6 +117,15 @@ export default class CurrentBooking extends React.Component {
                   ],
                   { cancelable: false }
                 )
+              }
+            />
+            <Button
+              title="Start Use"
+              color="#EF7568"
+              onPress={() =>
+                this.props.navigation.navigate("Scanner", {
+                  room: details.room
+                })
               }
             />
           </View>
