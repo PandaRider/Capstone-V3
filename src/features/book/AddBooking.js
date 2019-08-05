@@ -37,6 +37,7 @@ export default class RoomDetails extends React.Component {
       checkPurpose: true,
       checkAttendees: true
     };
+    console.log("state is: ", this.state)
   }
 
   getRoomDetails() {
@@ -68,21 +69,85 @@ export default class RoomDetails extends React.Component {
       .update({ id: bookingid });
   }
 
-  makeBooking() {
-    db.collection("fakebookings")
-      .add({
-        room: details.room,
-        purpose: this.state.purpose,
-        attendees: this.state.attendees,
-        location: details.location,
-        date: this.state.date,
-        time: this.state.time,
-        level: details.level
-      })
-      .then(ref => {
-        this.setBookingId(ref.id);
-        this.props.navigation.navigate("Home", { bookingid: ref.id });
+  async makeBooking() {
+    let [dday, dmonth, dyear] = this.state.date.split("-");
+    let startTime = this.props.navigation.getParam("start")
+    let endTime = this.props.navigation.getParam("end")
+    // startTime = startTime.slice(0, -3); // WARNING: manipulating string
+    // endTime = endTime.slice(0, -3);
+    // let sTime = parseInt(startTime);
+    // let eTime = parseInt(endTime);
+
+    let diff = endTime - startTime;
+    timeslots = [];
+    for (let d = 0; d < diff; d++) {
+      let inputStr = String(startTime + d);
+      timeslots.push(inputStr + "00");
+    }
+
+    // db.collection("fakebookings")
+    //   .add({
+    //     room: details.room,
+    //     purpose: this.state.purpose,
+    //     attendees: this.state.attendees,
+    //     location: details.location,
+    //     date: this.state.date,
+    //     time: this.state.time,
+    //     level: details.level
+    //   })
+    //   .then(ref => {
+    //     this.setBookingId(ref.id);
+    //     this.props.navigation.navigate("Home", { bookingid: ref.id });
+    //   });
+
+    // Purpose: Check for clashes. Query same dateTime slots first.
+      var dbPromises = [];
+      for (var i = 0; i < timeslots.length; i++) {
+        dbPromises.push(
+          db
+            .collection("userBookings3")
+            .where("month", "==", parseInt(dmonth))
+            .where("day", "==", parseInt(dday))
+            .where(timeslots[i], "==", true)
+            .where("roomName", "==", "Sapphire Room")
+            .get()
+        );
+      }
+  
+      let hasClash = false;
+      await Promise.all(dbPromises).then(snapshotArr => {
+        snapshotArr.forEach(snapshot => {
+          snapshot.forEach(doc => {
+            if (doc.exists) hasClash = true;
+          });
+        });
       });
+      console.log("Checking for clash...", hasClash);
+      
+      if (hasClash == false) {
+        let addMe = {
+          location:
+            "https://cdn2.f-cdn.com/contestentries/484655/17927409/57599f700cef0_thumb900.jpg",
+          bookedByUuid: "alice123"
+        };
+        addMe["day"] = parseInt(dday);
+        addMe["month"] = parseInt(dmonth);
+        addMe["year"] = parseInt(dyear);
+        addMe["purpose"] = this.state.purpose;
+        addMe["attendees"] = this.state.attendees;
+        timeslots.forEach(t => {
+          addMe[t] = true;
+        });
+        console.log(addMe);
+        
+        // db.collection("userBookings3")
+        //   .add(addMe)
+        //   .then(ref => this.props.navigation.navigate("Home", { bookingid: ref.id }));
+      } else {
+        this.props.navigation.navigate("SelectDateTime")
+        // 
+      }
+      
   }
 
   componentWillMount() {

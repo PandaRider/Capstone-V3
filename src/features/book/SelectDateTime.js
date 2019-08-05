@@ -107,13 +107,26 @@ export default class DateTimePicker extends Component {
           <Button
             title={"Confirm"}
             color="#EF7568"
-            onPress={() =>
+            onPress={() => {
+              let [dday, dmonth, dyear] = this.state.date.split("-");
+              // let dstart = this.state.starttime.split(":");
+              // let dend = this.state.endtime.split(":");
+              // dstart = dstart.join("");
+              // dend = dend.join("");
+              console.log(this.state.starttime, this.state.endtime)
+              dday = parseInt(dday);
+              dmonth = parseInt(dmonth);
+              dyear = parseInt(dyear);
+              
               this.props.navigation.navigate("SelectRoom", {
                 date: this.state.date,
                 start: this.state.starttime,
-                end: this.state.endtime
+                end: this.state.endtime,
+                // dayDate: dday,
+                // monthDate: dmonth,
+                // yearDate: dyear,
               })
-            }
+            }}
           />
         </View>
       </View>
