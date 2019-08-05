@@ -127,6 +127,14 @@ class Home extends React.Component {
     ));
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps != this.props) {
+      let ab = this.props.navigation.getParam("from_AddBooking","try again")
+      console.log(ab)
+      // console.log(this.props)
+    }
+  }
+
   componentDidMount() {
     const { navigation } = this.props;
     this.focusListener = navigation.addListener("didFocus", () => {
