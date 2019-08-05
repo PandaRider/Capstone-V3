@@ -130,6 +130,8 @@ export default class RoomDetails extends React.Component {
             "https://cdn2.f-cdn.com/contestentries/484655/17927409/57599f700cef0_thumb900.jpg",
           bookedByUuid: "alice123"
         };
+        addMe["date"] = this.state.date;
+        addMe["time"] = this.state.time;
         addMe["day"] = parseInt(dday);
         addMe["month"] = parseInt(dmonth);
         addMe["year"] = parseInt(dyear);

@@ -33,7 +33,7 @@ const current = {
   location:
     "https://cdn2.f-cdn.com/contestentries/484655/17927409/57599f700cef0_thumb900.jpg",
   purpose: "Quality Analysis",
-  room: "Onyx Room",
+  roomName: "Onyx Room",
   time: timestart + ":00 - " + timeend + ":00",
   id: "mToRcBgct3DyFWbLry4V",
   level: "8"
@@ -66,7 +66,7 @@ class Home extends React.Component {
         key={0}
         title={
           <Text>
-            {current.purpose} @ {current.room}
+            {current.purpose} @ {current.roomName}
           </Text>
         }
         subtitle={
@@ -111,7 +111,7 @@ class Home extends React.Component {
         key={i}
         title={
           <Text>
-            {l.purpose} @ {l.room}
+            {l.purpose} @ {l.roomName}
           </Text>
         }
         subtitle={
