@@ -152,13 +152,13 @@ class Home extends React.Component {
 
   componentDidMount() {
     const { navigation } = this.props;
-    this.focusListener = navigation.addListener("didFocus", () => {
+    // this.focusListener = navigation.addListener("didFocus", () => {
       this.getUpcomingBookings();
       this.setState({
         hasCurrent:
           this.props.navigation.getParam("hascurrent") == false ? false : true
       });
-    });
+    // });
   }
 
   render() {
