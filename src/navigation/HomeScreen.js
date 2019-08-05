@@ -130,8 +130,23 @@ class Home extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if(prevProps != this.props) {
       let ab = this.props.navigation.getParam("from_AddBooking","try again")
-      console.log(ab)
+      if (ab == "transit from AddBooking"){
+        console.log("is here")
+        db.collection("userBookings4").where("bookedByUuid","==","alice123").get().then(snapshot => {
+          let items = [];
+          snapshot.forEach(doc => {
+            items.push(doc.data());
+          })
+          console.log(items)
+          this.setState({
+            upcomingList: items,
+            hasUpcoming: true,
+            gotUpcoming: true
+          });
+        })
+      }
       // console.log(this.props)
+
     }
   }
 

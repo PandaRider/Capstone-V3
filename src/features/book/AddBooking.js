@@ -37,7 +37,7 @@ export default class RoomDetails extends React.Component {
       checkPurpose: true,
       checkAttendees: true
     };
-    console.log("state is: ", this.state)
+    // console.log("state is: ", this.state)
   }
 
   getRoomDetails() {
@@ -141,11 +141,11 @@ export default class RoomDetails extends React.Component {
         timeslots.forEach(t => {
           addMe[t] = true;
         });
-        console.log(addMe);
+        // console.log(addMe);
         
         db.collection("userBookings4")
           .add(addMe)
-          .then(ref => this.props.navigation.navigate("Home", { bookingid: ref.id, "from_AddBooking": "test_me!"}));
+          .then(ref => this.props.navigation.navigate("Home", { bookingid: ref.id, "from_AddBooking": "transit from AddBooking"}));
       } else {
         this.props.navigation.navigate("SelectDateTime")
         // 
