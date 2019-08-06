@@ -19,8 +19,8 @@ export default class AvailableRooms extends React.Component {
   };
 
   getAvailableRooms() {
-    db.collection("fakerooms")
-      .orderBy("room")
+    db.collection("roomTypes")
+      .orderBy("roomName")
       .get()
       .then(snapshot => {
         const items = [];
@@ -41,7 +41,7 @@ export default class AvailableRooms extends React.Component {
       <ListItem
         key={i}
         leftAvatar={{ source: { uri: l.image } }}
-        title={l.room}
+        title={l.roomName}
         subtitle={
           <Text>
             Level {l.level}, Capacity of {l.capacity}

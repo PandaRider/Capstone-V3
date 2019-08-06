@@ -43,7 +43,7 @@ export default class RoomDetails extends React.Component {
   getRoomDetails() {
     var roomid = this.props.navigation.getParam("roomid");
 
-    db.collection("fakerooms")
+    db.collection("roomTypes")
       .doc(roomid)
       .get()
       .then(doc => {
@@ -64,7 +64,7 @@ export default class RoomDetails extends React.Component {
   }
 
   setBookingId(bookingid) {
-    db.collection("fakebookings")
+    db.collection("userBookings4")
       .doc(bookingid)
       .update({ id: bookingid });
   }
@@ -105,7 +105,7 @@ export default class RoomDetails extends React.Component {
       for (var i = 0; i < timeslots.length; i++) {
         dbPromises.push(
           db
-            .collection("userBookings3")
+            .collection("userBookings4")
             .where("month", "==", parseInt(dmonth))
             .where("day", "==", parseInt(dday))
             .where(timeslots[i], "==", true)
@@ -166,7 +166,7 @@ export default class RoomDetails extends React.Component {
           <ScrollView>
             <Text style={styles.h1}>Room Details</Text>
             <View style={styles.section}>
-              <Text style={styles.h2}>{details.room}</Text>
+              <Text style={styles.h2}>{details.roomName}</Text>
               <Text>
                 Level {details.level}, Capacity of {details.capacity}
               </Text>
