@@ -109,7 +109,7 @@ export default class RoomDetails extends React.Component {
             .where("month", "==", parseInt(dmonth))
             .where("day", "==", parseInt(dday))
             .where(timeslots[i], "==", true)
-            .where("roomName", "==", details.room)
+            .where("roomName", "==", details.roomName)
             .get()
         );
       }
@@ -135,7 +135,7 @@ export default class RoomDetails extends React.Component {
         addMe["day"] = parseInt(dday);
         addMe["month"] = parseInt(dmonth);
         addMe["year"] = parseInt(dyear);
-        addMe["roomName"] = details.room;
+        addMe["roomName"] = details.roomName;
         addMe["level"] = details.level;
         addMe["location"] = details.location;
         addMe["purpose"] = this.state.purpose;
@@ -143,7 +143,7 @@ export default class RoomDetails extends React.Component {
         timeslots.forEach(t => {
           addMe[t] = true;
         });
-        // console.log(addMe);
+        console.log(addMe);
         
         db.collection("userBookings4")
           .add(addMe)

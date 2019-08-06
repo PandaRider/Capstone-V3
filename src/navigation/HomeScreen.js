@@ -82,27 +82,48 @@ class Home extends React.Component {
   }
 
   getUpcomingBookings() {
-    db.collection("fakebookings")
-      .orderBy("date") // TODO: order by proper datetime format instead
-      .get()
-      .then(snapshot => {
-        const items = [];
-        snapshot.forEach(doc => {
-          items.push(doc.data());
-        });
-        this.setState({
-          upcomingList: items,
-          hasUpcoming: true,
-          gotUpcoming: true
-        });
-      })
-      .catch(err => {
-        console.log("Error getting documents", err);
-        this.setState({
-          hasUpcoming: false,
-          gotUpcoming: true
-        });
+    db.collection("userBookings4")
+    .orderBy("date") // TODO: order by proper datetime format instead
+    .get()
+    .then(snapshot => {
+      const items = [];
+      snapshot.forEach(doc => {
+        items.push(doc.data());
       });
+      this.setState({
+        upcomingList: items,
+        hasUpcoming: true,
+        gotUpcoming: true
+      });
+    })
+    .catch(err => {
+      console.log("Error getting documents", err);
+      this.setState({
+        hasUpcoming: false,
+        gotUpcoming: true
+      });
+    });
+    // db.collection("fakebookings")
+    //   .orderBy("date") // TODO: order by proper datetime format instead
+    //   .get()
+    //   .then(snapshot => {
+    //     const items = [];
+    //     snapshot.forEach(doc => {
+    //       items.push(doc.data());
+    //     });
+    //     this.setState({
+    //       upcomingList: items,
+    //       hasUpcoming: true,
+    //       gotUpcoming: true
+    //     });
+    //   })
+    //   .catch(err => {
+    //     console.log("Error getting documents", err);
+    //     this.setState({
+    //       hasUpcoming: false,
+    //       gotUpcoming: true
+    //     });
+    //   });
   }
 
   getUpcomingBookingsItem() {

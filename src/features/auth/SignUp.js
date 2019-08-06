@@ -29,6 +29,7 @@ class SignUp extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log("my props are: ", this.props.auth.user)
     if (this.props.auth.user !== null) {
       this.props.navigation.navigate("App");
     }
