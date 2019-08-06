@@ -22,6 +22,11 @@ export default class DateTimePicker extends Component {
     this.state = { date: datetoday, starttime: timestart, endtime: timeend };
   }
 
+  componentDidUpdate(prevProps) {
+    if(prevProps != this.props) {
+      
+    }
+  }
   parser() {
     // to parse date and time before it is added to firebase
     var [dday, dmonth, dyear] = this.state.date.split("-");

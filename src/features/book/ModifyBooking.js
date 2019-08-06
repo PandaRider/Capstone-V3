@@ -33,8 +33,8 @@ export default class ModifyBooking extends React.Component {
 
   getBookingDetails() {
     var bookingid = this.props.navigation.getParam("bookingid");
-
-    db.collection("fakebookings")
+    // db.collection("fakebookings")
+    db.collection("userBookings4")
       .doc(bookingid)
       .get()
       .then(doc => {
@@ -57,7 +57,9 @@ export default class ModifyBooking extends React.Component {
   }
 
   updateBooking() {
-    db.collection("fakebookings")
+    // db.collection("fakebookings")
+    console.log(details.id)
+    db.collection("userBookings4")
       .doc(details.id)
       .update({
         purpose: this.state.purpose,
@@ -65,7 +67,7 @@ export default class ModifyBooking extends React.Component {
         date: this.state.date,
         time: this.state.time
       });
-    this.props.navigation.navigate("ViewBooking", { bookingid: details.id });
+    this.props.navigation.navigate("UpcomingBooking", { bookingid: details.id });
   }
 
   componentWillMount() {

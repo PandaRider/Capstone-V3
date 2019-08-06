@@ -147,7 +147,10 @@ export default class RoomDetails extends React.Component {
         
         db.collection("userBookings4")
           .add(addMe)
-          .then(ref => this.props.navigation.navigate("Home", { bookingid: ref.id, "from_AddBooking": "transit from AddBooking"}));
+          .then(ref => {
+            this.setBookingId(ref.id);
+            this.props.navigation.navigate("Home", { bookingid: ref.id, "from_AddBooking": "transit from AddBooking"}
+          )});
       } else {
         this.props.navigation.navigate("SelectDateTime")
         // 

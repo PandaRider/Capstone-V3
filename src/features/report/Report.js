@@ -38,7 +38,7 @@ export default class ReportScreen extends Component {
   };
 
   sendReport() {
-    db.collection("fakereports")
+    db.collection("reports")
       .add({
         room: this.state.room,
         title: this.state.title,
