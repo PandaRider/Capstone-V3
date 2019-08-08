@@ -35,7 +35,8 @@ export default class RoomDetails extends React.Component {
         ":00",
       gotRoom: false,
       checkPurpose: true,
-      checkAttendees: true
+      checkAttendees: true,
+      isLoading: false,
     };
     // console.log("state is: ", this.state)
   }
@@ -115,6 +116,7 @@ export default class RoomDetails extends React.Component {
       }
   
       let hasClash = false;
+      this.setState({ isLoading: true })
       await Promise.all(dbPromises).then(snapshotArr => {
         snapshotArr.forEach(snapshot => {
           snapshot.forEach(doc => {
@@ -149,6 +151,7 @@ export default class RoomDetails extends React.Component {
           .add(addMe)
           .then(ref => {
             this.setBookingId(ref.id);
+            this.setState({ isLoading: false })
             this.props.navigation.navigate("Home", { bookingid: ref.id, "from_AddBooking": "transit from AddBooking"}
           )});
       } else {
@@ -163,7 +166,7 @@ export default class RoomDetails extends React.Component {
   }
 
   render() {
-    if (this.state.gotRoom) {
+    if (this.state.gotRoom && this.state.isLoading == false) {
       return (
         <View style={styles.view}>
           <ScrollView>
