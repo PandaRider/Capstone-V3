@@ -164,9 +164,9 @@ class Home extends React.Component {
             />
           </View>
           <ActionButton
-            size={70}
-            buttonText="New Booking"
-            buttonTextStyle={{ fontSize: 15, textAlign: "center" }}
+            // size={70}
+            // buttonText="New Booking"
+            // buttonTextStyle={{ fontSize: 15, textAlign: "center" }}
             buttonColor="#f85441"
             shadowStyle={{
               shadowColor: "#000",

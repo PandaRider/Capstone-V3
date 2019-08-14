@@ -25,6 +25,7 @@ export default class RoomDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: false,
       purpose: "",
       attendees: "",
       date: this.props.navigation.getParam("date"),
@@ -69,6 +70,7 @@ export default class RoomDetails extends React.Component {
   }
 
   makeBooking() {
+    this.setState({ isLoading: true })
     db.collection("fakebookings")
       .add({
         room: details.room,
@@ -81,6 +83,7 @@ export default class RoomDetails extends React.Component {
       })
       .then(ref => {
         this.setBookingId(ref.id);
+        this.setState({ isLoading: false })
         this.props.navigation.navigate("Home", { bookingid: ref.id });
       });
   }
@@ -90,7 +93,7 @@ export default class RoomDetails extends React.Component {
   }
 
   render() {
-    if (this.state.gotRoom) {
+    if (this.state.gotRoom && this.state.isLoading == false) {
       return (
         <View style={styles.view}>
           <ScrollView>
