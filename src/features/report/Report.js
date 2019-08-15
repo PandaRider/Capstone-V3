@@ -1,3 +1,7 @@
+/**
+ * Report.js is for the user to file a report on the room.
+ */
+
 import React, { Component } from "react";
 import { Button, Text, View, StyleSheet, Alert } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
@@ -9,6 +13,7 @@ import Firebase from "../../../Firebase";
 
 var db = Firebase.firestore();
 
+// default dropdown options
 var titles = [
   { id: 1, name: "Missing Cable" },
   { id: 2, name: "Missing Chairs" },
@@ -30,6 +35,7 @@ export default class ReportScreen extends Component {
     activeTintColor: "white"
   };
 
+  // set state variables
   state = {
     room: "",
     title: "",
@@ -37,6 +43,7 @@ export default class ReportScreen extends Component {
     fieldsFilled: true
   };
 
+  // push report data to firestore
   sendReport() {
     db.collection("reports")
       .add({
@@ -55,6 +62,7 @@ export default class ReportScreen extends Component {
   render() {
     return (
       <View style={styles.view}>
+        {/* Report components */}
         <Text style={styles.h1}>Report</Text>
 
         <Text style={styles.h2}>Affected Room</Text>
@@ -113,6 +121,7 @@ export default class ReportScreen extends Component {
           itemStyle={styles.itemstyle}
         />
 
+        {/* logic check for valid user inputs */}
         {this.state.fieldsFilled ? (
           <View />
         ) : (

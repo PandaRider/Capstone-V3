@@ -1,3 +1,7 @@
+/**
+ * Nav.js sets up the navigation between screens.
+ */
+
 import { createSwitchNavigator, createStackNavigator } from "react-navigation";
 import AuthTabs from "../features/auth/Tabs";
 import AuthLoadingScreen from "../features/auth/AuthLoading";

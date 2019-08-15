@@ -1,3 +1,8 @@
+/**
+ * CurrentBooking.js is for the user to view the booking that is
+ * currently in session and to 'Start Use' or 'End Now'.
+ */
+
 import React from "react";
 import {
   View,
@@ -20,11 +25,13 @@ export default class CurrentBooking extends React.Component {
     headerTintColor: "#EF7568"
   };
 
+  // set state variables
   state = {
     gotBooking: false,
     startedUse: false
   };
 
+  // retrieve booking data from navigation parameters
   getBookingDetails() {
     details = this.props.navigation.getParam("current");
     this.setState({ gotBooking: true });
@@ -38,6 +45,8 @@ export default class CurrentBooking extends React.Component {
   }
 
   render() {
+    // depending on state of data retrieval, display
+    // either a loading or the actual screen
     if (this.state.gotBooking) {
       return (
         <View style={styles.view}>
@@ -93,6 +102,7 @@ export default class CurrentBooking extends React.Component {
           </ScrollView>
 
           <View style={styles.alignbtns}>
+            {/* Button to end booking now */}
             <Button
               color="#EF7568"
               title="End Now"
@@ -119,6 +129,8 @@ export default class CurrentBooking extends React.Component {
                 )
               }
             />
+
+            {/* Button to start room usage */}
             <Button
               title="Start Use"
               color="#EF7568"

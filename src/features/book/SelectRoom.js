@@ -1,3 +1,8 @@
+/**
+ * SelectRoom.js is for the user to select the meeting room
+ * for the new booking.
+ */
+
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
@@ -14,10 +19,12 @@ export default class AvailableRooms extends React.Component {
     headerTintColor: "#EF7568"
   };
 
+  // set state variables
   state = {
     availableList: []
   };
 
+  // retrieve data of available rooms from firestore
   getAvailableRooms() {
     db.collection("roomTypes")
       .orderBy("roomName")
@@ -36,6 +43,7 @@ export default class AvailableRooms extends React.Component {
       });
   }
 
+  // generate sreen components of available rooms
   getAvailableRoomsItem() {
     return this.state.availableList.map((l, i) => (
       <ListItem
@@ -50,6 +58,7 @@ export default class AvailableRooms extends React.Component {
         containerStyle={styles.availableroomitem}
         chevron={true}
         onPress={() =>
+          // Register the selected room
           this.props.navigation.navigate("AddBooking", {
             roomid: l.id,
             date: this.props.navigation.getParam("date"),
@@ -77,6 +86,7 @@ export default class AvailableRooms extends React.Component {
   render() {
     return (
       <View>
+        {/* Available rooms components */}
         <Text style={styles.h1}>Available Rooms</Text>
         <Text style={styles.h2}>
           Date: {this.props.navigation.getParam("date")}

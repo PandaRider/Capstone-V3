@@ -16,8 +16,10 @@ import Firebase from "./Firebase";
 import * as FileSystem from "expo-file-system";
 import uuid from "uuid";
 
+// to remove yellow warnings in expo build
 console.disableYellowBox = true;
 
+// create a new user and register the user id
 var db = Firebase.firestore();
 const idfile = `${FileSystem.documentDirectory}/userid`;
 

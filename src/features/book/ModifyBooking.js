@@ -1,3 +1,8 @@
+/**
+ * ModifyBooking.js is for the user to modify a the purpose of booking and
+ * number of attendees for the booking they have already made.
+ */
+
 import React from "react";
 import {
   Text,
@@ -22,6 +27,7 @@ export default class ModifyBooking extends React.Component {
     headerTintColor: "#EF7568"
   };
 
+  // set state variables
   state = {
     charsleft: maxchars,
     purpose: "",
@@ -31,9 +37,9 @@ export default class ModifyBooking extends React.Component {
     gotBooking: false
   };
 
+  // retrieve booking data from firestore
   getBookingDetails() {
     var bookingid = this.props.navigation.getParam("bookingid");
-    // db.collection("fakebookings")
     db.collection("userBookings4")
       .doc(bookingid)
       .get()
@@ -56,6 +62,7 @@ export default class ModifyBooking extends React.Component {
       });
   }
 
+  // push modified booking data to firestore
   updateBooking() {
     db.collection("userBookings4")
       .doc(details.id)
@@ -75,9 +82,12 @@ export default class ModifyBooking extends React.Component {
   }
 
   render() {
+    // depending on state of data retrieval, display
+    // either a loading or the actual screen
     if (this.state.gotBooking) {
       return (
         <View style={styles.section}>
+          {/* Booking modification form components */}
           <Text style={styles.h1}>Booking Form</Text>
           <View style={styles.form}>
             <Text style={styles.h2}>Purpose of booking</Text>
@@ -103,6 +113,7 @@ export default class ModifyBooking extends React.Component {
             />
 
             <View style={{ paddingVertical: 15 }}>
+              {/* Button to modify booking */}
               <Button
                 color="#EF7568"
                 title="Update"

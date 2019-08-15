@@ -1,3 +1,7 @@
+/**
+ * BottomBar.js sets up the navigation between screens.
+ */
+
 import React from "react";
 import { createStackNavigator } from "react-navigation";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";

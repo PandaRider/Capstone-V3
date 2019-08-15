@@ -1,3 +1,7 @@
+/**
+ * Scanner.js is for the user to scan a QR code to start the room usage.
+ */
+
 import * as React from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -23,11 +27,13 @@ export default class BarcodeScannerExample extends React.Component {
     activeTintColor: "white"
   });
 
+  // set state variables
   state = {
     hasCameraPermission: null,
     scanned: false
   };
 
+  // obtain camera permissions
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === "granted" });
@@ -44,6 +50,7 @@ export default class BarcodeScannerExample extends React.Component {
     }
     return (
       <View style={{ flex: 1, justifyContent: "flex-end", margin: 20 }}>
+        {/* QR scanner components */}
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
           style={StyleSheet.absoluteFillObject}
@@ -55,6 +62,7 @@ export default class BarcodeScannerExample extends React.Component {
     );
   }
 
+  // Register scan of QR code
   handleBarCodeScanned = ({ data }) => {
     room = this.props.navigation.getParam("room");
 
@@ -68,6 +76,7 @@ export default class BarcodeScannerExample extends React.Component {
         .collection("users")
         .doc(userid);
 
+      // update score if verification is successful
       firebase
         .firestore()
         .runTransaction(async transaction => {

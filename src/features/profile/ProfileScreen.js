@@ -1,3 +1,8 @@
+/**
+ * ProfileScreen.js is for the user to view their profile
+ * and personal beanstalk.
+ */
+
 import React, { Component } from "react";
 import {
   Text,
@@ -30,6 +35,7 @@ export default class ProfileScreen extends Component {
     activeTintColor: "white"
   };
 
+  // set state variables
   state = {
     nameVisible: false,
     emailVisible: false,
@@ -39,6 +45,7 @@ export default class ProfileScreen extends Component {
     gotBaseScore: false
   };
 
+  // retrieve initial beanstalk score data from firestore
   getBaseScore() {
     const file = `${FileSystem.documentDirectory}/userid`;
     FileSystem.readAsStringAsync(file).then(result => {
@@ -53,11 +60,13 @@ export default class ProfileScreen extends Component {
     });
   }
 
+  // retrieve new score data from navigation parameters
   getScore() {
     currentScore = this.props.navigation.getParam("score");
     this.setState({ score: currentScore });
   }
 
+  // load the beanstalk image that corresponds to the current score
   getImage() {
     var image = "";
 
@@ -121,6 +130,7 @@ export default class ProfileScreen extends Component {
     if (this.state.gotBaseScore) {
       return (
         <View style={styles.view}>
+          {/* Profile components */}
           <Text style={styles.h1}>Profile</Text>
 
           <DialogInput
@@ -201,6 +211,7 @@ export default class ProfileScreen extends Component {
               }
             />
 
+            {/* Beanstalk component */}
             <Text style={styles.beanstalk}>My Beanstalk Growth</Text>
             <Text style={{ textAlign: "center", paddingBottom: 10 }}>
               Current room usage streak is at {currentScore}!

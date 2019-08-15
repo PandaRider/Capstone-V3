@@ -1,3 +1,7 @@
+/**
+ * UserList.js is for the user to select the colleague they want to chat with.
+ */
+
 import React from "react";
 import { ActivityIndicator, View, Text, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -13,6 +17,7 @@ export default class ChatScreen extends React.Component {
     gotColleagueList: false
   };
 
+  // retrieve colleagues data from firestore
   getColleagueList = () => {
     db.collection("users")
       .orderBy("name")
@@ -32,6 +37,7 @@ export default class ChatScreen extends React.Component {
       });
   };
 
+  // generate screen components of colleagues
   getColleagueListItem() {
     return this.state.colleagueList.map((data, i) => {
       return (
@@ -39,6 +45,7 @@ export default class ChatScreen extends React.Component {
           key={i}
           style={styles.item}
           onPress={() =>
+            // Register the selected colleague
             this.props.navigation.navigate("Chat", {
               colleagueid: data.uid,
               colleaguename: data.name

@@ -1,3 +1,8 @@
+/**
+ * UpcomingBooking.js is for the user to view a booking from
+ * the upcoming sessions and to 'Cancel' or 'Modify' it.
+ */
+
 import React from "react";
 import {
   View,
@@ -24,10 +29,12 @@ export default class ViewBooking extends React.Component {
     headerTintColor: "#EF7568"
   };
 
+  // set state variables
   state = {
     gotBooking: false
   };
 
+  // retrieve upcoming booking data from firestore
   getBookingDetails() {
     var roomid = this.props.navigation.getParam("bookingid");
 
@@ -58,6 +65,7 @@ export default class ViewBooking extends React.Component {
     if (this.state.gotBooking) {
       return (
         <View style={styles.view}>
+          {/* Booking details components */}
           <Text style={styles.h1}>
             {details.purpose} @ {details.room}
           </Text>
@@ -107,7 +115,9 @@ export default class ViewBooking extends React.Component {
               style={{ width: "100%", height: 200 }}
             />
           </ScrollView>
+
           <View style={styles.alignbtns}>
+            {/* Button to cancel booking */}
             <Button
               title="Cancel booking"
               color="#EF7568"
@@ -137,6 +147,8 @@ export default class ViewBooking extends React.Component {
                 );
               }}
             />
+
+            {/* Button to modify booking */}
             <Button
               color="#EF7568"
               title="Modify booking"

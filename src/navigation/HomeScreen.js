@@ -16,17 +16,18 @@ import { logOutAndClearToken } from "../features/auth/authActions";
 import "firebase/firestore";
 import Firebase from "../../Firebase";
 
-var day = new Date().getDate(); //Current Date
-var month = new Date().getMonth() + 1; //Current Month
-var year = new Date().getFullYear(); //Current Year
+// get and set current datetime values
+var day = new Date().getDate();
+var month = new Date().getMonth() + 1;
+var year = new Date().getFullYear();
 var datetoday = day + "-" + month + "-" + year;
-
-var hours = new Date().getHours(); //Current Hours
+var hours = new Date().getHours();
 var timestart = hours;
 var timeend = hours + 1;
 
 var db = Firebase.firestore();
 
+// a mock current booking has been created to demonstrate the feature
 const current = {
   attendees: "6",
   date: datetoday,
@@ -45,6 +46,7 @@ class Home extends React.Component {
     headerTintColor: "#EF7568"
   };
 
+  // set state variables
   state = {
     username: "",
     isLoggedIn: true,
@@ -60,6 +62,7 @@ class Home extends React.Component {
     this.props.navigation.navigate("SignIn");
   }
 
+  // display mock current booking
   getCurrentBooking() {
     return (
       <ListItem
@@ -81,6 +84,7 @@ class Home extends React.Component {
     );
   }
 
+  // retrieve upcoming bookings data from firestore
   getUpcomingBookings() {
     db.collection("userBookings4")
       .orderBy("date")
@@ -105,6 +109,7 @@ class Home extends React.Component {
       });
   }
 
+  // generate upcoming bookings components
   getUpcomingBookingsItem() {
     return this.state.upcomingList.map((l, i) => (
       <ListItem
@@ -158,9 +163,12 @@ class Home extends React.Component {
   }
 
   render() {
+    // depending on state of data retrieval, display
+    // either a loading or the actual screen
     if (this.state.gotUpcoming) {
       return (
         <View style={styles.view}>
+          {/* Current booking components */}
           <View style={styles.currentview}>
             <Text style={styles.h1}>My Current Bookings</Text>
             {this.state.hasCurrent ? (
@@ -169,19 +177,25 @@ class Home extends React.Component {
               <Text style={styles.niltext}>No current booking</Text>
             )}
           </View>
+
+          {/* Upcoming bookings components */}
           <Text style={styles.h1}>My Upcoming Bookings</Text>
           {this.state.hasUpcoming ? (
             <ScrollView>{this.getUpcomingBookingsItem()}</ScrollView>
           ) : (
             <Text style={styles.niltext}>No upcoming bookings</Text>
           )}
+
           <View style={styles.bottomview}>
+            {/* Button to log out */}
             <Button
               title={"Logout"}
               color="#EF7568"
               onPress={this.logout.bind(this)}
             />
           </View>
+
+          {/* Button to add a new booking */}
           <ActionButton
             size={70}
             buttonText="New Booking"

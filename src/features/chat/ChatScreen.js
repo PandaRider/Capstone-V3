@@ -1,3 +1,7 @@
+/**
+ * ChatScreen.js is for the user to chat with other registered users.
+ */
+
 import React from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { Bubble, GiftedChat } from "react-native-gifted-chat";
@@ -15,6 +19,7 @@ FileSystem.readAsStringAsync(file).then(result => {
 var db = Firebase.firestore();
 
 export default class ChatScreen extends React.Component {
+  // set state variables
   state = {
     messages: [],
     database: ""
@@ -24,6 +29,7 @@ export default class ChatScreen extends React.Component {
     _id: userid
   };
 
+  // retrieve chat data from firestore
   getMessageList = () => {
     db.collection(this.state.database)
       .orderBy("createdAt", "desc")
@@ -40,6 +46,7 @@ export default class ChatScreen extends React.Component {
       });
   };
 
+  // send a new message
   addMessage = messages => {
     db.collection(this.state.database)
       .add({
@@ -51,6 +58,7 @@ export default class ChatScreen extends React.Component {
       .then(this.getMessageList());
   };
 
+  // set the database id to retrieve chat history from
   getChat = () => {
     var colleagueid = this.props.navigation.getParam("colleagueid");
     var database;
@@ -81,11 +89,14 @@ export default class ChatScreen extends React.Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.view}>
+        {/* Button to view list of users */}
         <Button
           color="#EF7568"
           title={"Return to Chats"}
           onPress={() => navigate("Users")}
         />
+
+        {/* Chat components */}
         <Text style={styles.colleague}>
           {this.props.navigation.getParam("colleaguename")}
         </Text>

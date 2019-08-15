@@ -1,3 +1,8 @@
+/**
+ * AddBooking.js is for the user to view the room that they have selected
+ * and fill in the booking form to make a booking.
+ */
+
 import React from "react";
 import {
   ScrollView,
@@ -24,6 +29,8 @@ export default class RoomDetails extends React.Component {
 
   constructor(props) {
     super(props);
+
+    // set state variables
     this.state = {
       purpose: "",
       attendees: "",
@@ -40,6 +47,7 @@ export default class RoomDetails extends React.Component {
     };
   }
 
+  // retrieve room data from firestore
   getRoomDetails() {
     var roomid = this.props.navigation.getParam("roomid");
 
@@ -69,14 +77,11 @@ export default class RoomDetails extends React.Component {
       .update({ id: bookingid });
   }
 
+  // push booking data to firestore if there is no clash with existing bookings
   async makeBooking() {
     let [dday, dmonth, dyear] = this.state.date.split("-");
     let startTime = this.props.navigation.getParam("start");
     let endTime = this.props.navigation.getParam("end");
-    // startTime = startTime.slice(0, -3); // WARNING: manipulating string
-    // endTime = endTime.slice(0, -3);
-    // let sTime = parseInt(startTime);
-    // let eTime = parseInt(endTime);
 
     let diff = endTime - startTime;
     timeslots = [];
@@ -85,22 +90,6 @@ export default class RoomDetails extends React.Component {
       timeslots.push(inputStr + "00");
     }
 
-    // db.collection("fakebookings")
-    //   .add({
-    //     room: details.room,
-    //     purpose: this.state.purpose,
-    //     attendees: this.state.attendees,
-    //     location: details.location,
-    //     date: this.state.date,
-    //     time: this.state.time,
-    //     level: details.level
-    //   })
-    //   .then(ref => {
-    //     this.setBookingId(ref.id);
-    //     this.props.navigation.navigate("Home", { bookingid: ref.id });
-    //   });
-
-    // Purpose: Check for clashes. Query same dateTime slots first.
     var dbPromises = [];
     for (var i = 0; i < timeslots.length; i++) {
       dbPromises.push(
@@ -156,7 +145,6 @@ export default class RoomDetails extends React.Component {
         });
     } else {
       this.props.navigation.navigate("SelectDateTime");
-      //
     }
   }
 
@@ -165,10 +153,13 @@ export default class RoomDetails extends React.Component {
   }
 
   render() {
+    // depending on state of data retrieval, display
+    // either a loading or the actual screen
     if (this.state.gotRoom && this.state.isLoading == false) {
       return (
         <View style={styles.view}>
           <ScrollView>
+            {/* Room detail components */}
             <Text style={styles.h1}>Room Details</Text>
             <View style={styles.section}>
               <Text style={styles.h2}>{details.roomName}</Text>
@@ -197,6 +188,7 @@ export default class RoomDetails extends React.Component {
               />
             </View>
 
+            {/* Booking form components */}
             <View style={styles.section}>
               <Text style={styles.h1}>Booking Form</Text>
               <Text style={styles.datetime}>Date: {this.state.date}</Text>
@@ -230,11 +222,13 @@ export default class RoomDetails extends React.Component {
                     Invalid number of attendees.
                   </Text>
                 )}
-
+                
+                {/* Button to make booking */}
                 <Button
                   title="Book"
                   color="#EF7568"
                   onPress={() => {
+                    // check that all inputs are valid
                     if (
                       this.state.purpose == "" ||
                       this.state.attendees == ""

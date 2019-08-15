@@ -1,13 +1,18 @@
+/**
+ * SelectDateTime.js is for the user to select the booking date and time
+ * of the new booking.
+ */
+
 import React, { Component } from "react";
 import { Text, Button, View, StyleSheet, Picker } from "react-native";
 import DatePicker from "react-native-datepicker";
 
-var day = new Date().getDate(); //Current Date
-var month = new Date().getMonth() + 1; //Current Month
-var year = new Date().getFullYear(); //Current Year
+// get and set current datetime values
+var day = new Date().getDate();
+var month = new Date().getMonth() + 1;
+var year = new Date().getFullYear();
 var datetoday = day + "-" + month + "-" + year;
-
-var hours = new Date().getHours(); //Current Hours
+var hours = new Date().getHours();
 var timestart = hours;
 var timeend = hours + 1;
 
@@ -19,6 +24,8 @@ export default class DateTimePicker extends Component {
 
   constructor(props) {
     super(props);
+
+    // set state variables
     this.state = { date: datetoday, starttime: timestart, endtime: timeend };
   }
 
@@ -27,6 +34,7 @@ export default class DateTimePicker extends Component {
     }
   }
 
+  // generate range of available time selections
   getTimePickerItems(tval, start) {
     var tvals = [];
 
@@ -54,6 +62,7 @@ export default class DateTimePicker extends Component {
   render() {
     return (
       <View style={styles.container}>
+        {/* Date selection component */}
         <Text style={styles.h1}>Select Date</Text>
         <DatePicker
           style={styles.picker}
@@ -70,6 +79,8 @@ export default class DateTimePicker extends Component {
             this.setState({ date: date });
           }}
         />
+
+        {/* Time selection components */}
         <Text style={styles.h1}>Select Time</Text>
         <View style={styles.timeinput}>
           <Text style={styles.h2}>Start time</Text>
@@ -83,6 +94,7 @@ export default class DateTimePicker extends Component {
             {this.getTimePickerItems(timestart, true)}
           </Picker>
         </View>
+
         <View style={styles.timeinput}>
           <Text style={styles.h2}> End time </Text>
           <Picker
@@ -95,7 +107,9 @@ export default class DateTimePicker extends Component {
             {this.getTimePickerItems(this.state.starttime + 1, false)}
           </Picker>
         </View>
+
         <View style={styles.btn}>
+          {/* Button to make datetime selection */}
           <Button
             title={"Confirm"}
             color="#EF7568"
