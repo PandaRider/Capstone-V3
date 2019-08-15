@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, TextInput, StyleSheet, Image, Modal } from "react-native";
+import { Text, View, StyleSheet, Image } from "react-native";
 import { connect } from "react-redux";
 
 import { signIn } from "./authActions";
@@ -27,9 +27,6 @@ class SignIn extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps) {
-      // probably unnecessary
-      // console.log("Output from reducer is: ", this.props.auth.user);
-      // console.log("current user is: ", firebase.auth().currentUser);
       if (this.props.auth.user.email !== undefined) {
         this.props.navigation.navigate("App");
       }
@@ -37,7 +34,6 @@ class SignIn extends React.Component {
   }
 
   render() {
-    // const { fontsLoaded } = this.state;
     const {
       auth: { signInErrorMessage, isAuthenticating, signInError }
     } = this.props;

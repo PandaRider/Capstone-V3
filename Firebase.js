@@ -9,23 +9,6 @@ const config = {
   messagingSenderId: "192257427686"
 };
 
-export default (!firebase.apps.length ? firebase.initializeApp(config) : firebase.app());
-
-//Example use: copy code snippet below to another file in the same folder
-
-// import firebase from "./Firebase";
-
-// var db = firebase.firestore();
-
-// db.collection("boards")
-//   .get()
-//   .then(snapshot => {
-//     snapshot.forEach(doc => {
-//       console.log(doc.id, "=>", doc.data());
-//     });
-//   })
-//   .catch(err => {
-//     console.log("Error getting documents", err);
-//   });
-
-// firebase.firestore().collection("user").doc("fabian").set({ message: "how are you" });
+export default (!firebase.apps.length
+  ? firebase.initializeApp(config)
+  : firebase.app());

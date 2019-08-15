@@ -60,5 +60,4 @@ const routeConfig = {
   }
 };
 
-// export default createAppContainer(createBottomTabNavigator(routes, routeConfig))
 export default createBottomTabNavigator(routes, routeConfig);

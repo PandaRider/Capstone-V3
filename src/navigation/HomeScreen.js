@@ -83,47 +83,26 @@ class Home extends React.Component {
 
   getUpcomingBookings() {
     db.collection("userBookings4")
-    .orderBy("date") // TODO: order by proper datetime format instead
-    .get()
-    .then(snapshot => {
-      const items = [];
-      snapshot.forEach(doc => {
-        items.push(doc.data());
+      .orderBy("date")
+      .get()
+      .then(snapshot => {
+        const items = [];
+        snapshot.forEach(doc => {
+          items.push(doc.data());
+        });
+        this.setState({
+          upcomingList: items,
+          hasUpcoming: true,
+          gotUpcoming: true
+        });
+      })
+      .catch(err => {
+        console.log("Error getting documents", err);
+        this.setState({
+          hasUpcoming: false,
+          gotUpcoming: true
+        });
       });
-      this.setState({
-        upcomingList: items,
-        hasUpcoming: true,
-        gotUpcoming: true
-      });
-    })
-    .catch(err => {
-      console.log("Error getting documents", err);
-      this.setState({
-        hasUpcoming: false,
-        gotUpcoming: true
-      });
-    });
-    // db.collection("fakebookings")
-    //   .orderBy("date") // TODO: order by proper datetime format instead
-    //   .get()
-    //   .then(snapshot => {
-    //     const items = [];
-    //     snapshot.forEach(doc => {
-    //       items.push(doc.data());
-    //     });
-    //     this.setState({
-    //       upcomingList: items,
-    //       hasUpcoming: true,
-    //       gotUpcoming: true
-    //     });
-    //   })
-    //   .catch(err => {
-    //     console.log("Error getting documents", err);
-    //     this.setState({
-    //       hasUpcoming: false,
-    //       gotUpcoming: true
-    //     });
-    //   });
   }
 
   getUpcomingBookingsItem() {
@@ -149,37 +128,33 @@ class Home extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevProps != this.props) {
-      let ab = this.props.navigation.getParam("from_AddBooking","try again")
-      if (ab == "transit from AddBooking"){
-        console.log("is here")
-        db.collection("userBookings4").where("bookedByUuid","==","alice123").get().then(snapshot => {
-          let items = [];
-          snapshot.forEach(doc => {
-            items.push(doc.data());
-          })
-          console.log(items)
-          this.setState({
-            upcomingList: items,
-            hasUpcoming: true,
-            gotUpcoming: true
+    if (prevProps != this.props) {
+      let ab = this.props.navigation.getParam("from_AddBooking", "try again");
+      if (ab == "transit from AddBooking") {
+        db.collection("userBookings4")
+          .where("bookedByUuid", "==", "alice123")
+          .get()
+          .then(snapshot => {
+            let items = [];
+            snapshot.forEach(doc => {
+              items.push(doc.data());
+            });
+            this.setState({
+              upcomingList: items,
+              hasUpcoming: true,
+              gotUpcoming: true
+            });
           });
-        })
       }
-      // console.log(this.props)
-
     }
   }
 
   componentDidMount() {
-    const { navigation } = this.props;
-    // this.focusListener = navigation.addListener("didFocus", () => {
-      this.getUpcomingBookings();
-      this.setState({
-        hasCurrent:
-          this.props.navigation.getParam("hascurrent") == false ? false : true
-      });
-    // });
+    this.getUpcomingBookings();
+    this.setState({
+      hasCurrent:
+        this.props.navigation.getParam("hascurrent") == false ? false : true
+    });
   }
 
   render() {

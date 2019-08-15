@@ -7,11 +7,8 @@ import { logInSuccess } from "./authActions";
 class AuthLoading extends React.Component {
   _getUserToken = async () => {
     try {
-      // TODO:
-      // Security flaw because userToken is unencrypted. userToken is also not used.
       let data = await AsyncStorage.getItem("userToken");
       let userToken = JSON.parse(data);
-      console.log("Output from AsyncStorage: ", userToken);
       return userToken;
     } catch (error) {
       console.log("Something went wrong", error);

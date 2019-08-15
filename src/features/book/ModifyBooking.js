@@ -57,8 +57,6 @@ export default class ModifyBooking extends React.Component {
   }
 
   updateBooking() {
-    // db.collection("fakebookings")
-    console.log(details.id)
     db.collection("userBookings4")
       .doc(details.id)
       .update({
@@ -67,7 +65,9 @@ export default class ModifyBooking extends React.Component {
         date: this.state.date,
         time: this.state.time
       });
-    this.props.navigation.navigate("UpcomingBooking", { bookingid: details.id });
+    this.props.navigation.navigate("UpcomingBooking", {
+      bookingid: details.id
+    });
   }
 
   componentWillMount() {

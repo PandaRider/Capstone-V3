@@ -23,21 +23,8 @@ export default class DateTimePicker extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(prevProps != this.props) {
-      
+    if (prevProps != this.props) {
     }
-  }
-  parser() {
-    // to parse date and time before it is added to firebase
-    var [dday, dmonth, dyear] = this.state.date.split("-");
-    var dstart = this.state.starttime;
-    var dend = this.state.endtime;
-
-    dday = parseInt(dday);
-    dmonth = parseInt(dmonth);
-    dyear = parseInt(dyear);
-
-    return dday, dmonth, dyear, dstart, dend;
   }
 
   getTimePickerItems(tval, start) {
@@ -70,8 +57,8 @@ export default class DateTimePicker extends Component {
         <Text style={styles.h1}>Select Date</Text>
         <DatePicker
           style={styles.picker}
-          date={this.state.date} //initial date from state
-          mode="date" //The enum of date, datetime and time
+          date={this.state.date}
+          mode="date"
           placeholder="Select date"
           format="DD-MM-YYYY"
           minDate={datetoday}
@@ -114,23 +101,15 @@ export default class DateTimePicker extends Component {
             color="#EF7568"
             onPress={() => {
               let [dday, dmonth, dyear] = this.state.date.split("-");
-              // let dstart = this.state.starttime.split(":");
-              // let dend = this.state.endtime.split(":");
-              // dstart = dstart.join("");
-              // dend = dend.join("");
-              console.log(this.state.starttime, this.state.endtime)
               dday = parseInt(dday);
               dmonth = parseInt(dmonth);
               dyear = parseInt(dyear);
-              
+
               this.props.navigation.navigate("SelectRoom", {
                 date: this.state.date,
                 start: this.state.starttime,
-                end: this.state.endtime,
-                // dayDate: dday,
-                // monthDate: dmonth,
-                // yearDate: dyear,
-              })
+                end: this.state.endtime
+              });
             }}
           />
         </View>

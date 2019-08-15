@@ -27,7 +27,7 @@ const ChatStack = createStackNavigator(
   {
     headerMode: "none",
     navigationOptions: {
-      tabBarIcon: ({ focused, tintColor }) => (
+      tabBarIcon: ({ tintColor }) => (
         <Icon
           style={[{ color: tintColor }]}
           size={25}
@@ -52,7 +52,7 @@ const BookingStack = createStackNavigator(
   },
   {
     navigationOptions: {
-      tabBarIcon: ({ focused, tintColor }) => (
+      tabBarIcon: ({ tintColor }) => (
         <Icon style={[{ color: tintColor }]} size={25} name={"ios-home"} />
       ),
       activeTintColor: "white"

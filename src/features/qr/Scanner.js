@@ -16,8 +16,8 @@ FileSystem.readAsStringAsync(file).then(result => {
 });
 
 export default class BarcodeScannerExample extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    tabBarIcon: ({ focused, tintColor }) => (
+  static navigationOptions = () => ({
+    tabBarIcon: ({ tintColor }) => (
       <Icon style={[{ color: tintColor }]} size={25} name={"ios-qr-scanner"} />
     ),
     activeTintColor: "white"
@@ -55,8 +55,7 @@ export default class BarcodeScannerExample extends React.Component {
     );
   }
 
-  handleBarCodeScanned = ({ type, data }) => {
-    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+  handleBarCodeScanned = ({ data }) => {
     room = this.props.navigation.getParam("room");
 
     if (data == room) {
@@ -107,5 +106,3 @@ const styles = StyleSheet.create({
     borderWidth: 3
   }
 });
-
-// https://rnfirebase.io/docs/v5.x.x/firestore/transactions#Increment-a-value

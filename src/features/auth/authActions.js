@@ -34,15 +34,12 @@ function signUpFailure(err) {
 export function createUser(password, email) {
   return dispatch => {
     dispatch(signUp());
-    console.log("email received: ", email);
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(data => {
-        console.log("data from signUp: ", data);
         AsyncStorage.setItem("userToken", JSON.stringify(data))
           .then(() => {
-            console.log("Token Saved");
             dispatch(signUpSuccess(data));
           })
           .catch(err => console.log("error in AsyncStorage", err));
@@ -95,33 +92,6 @@ function logInFailure(err) {
   };
 }
 
-// TODO:
-// Refactor this to use ES7 await
-// export function signIn(email, password) {
-//   return dispatch => {
-//     dispatch(logIn());
-//     firebase.auth().signInWithEmailAndPassword(email, password)
-//       .then(() => {
-//         firebase.auth().onAuthStateChanged((user) => {
-//           // console.log("data from signIn: ", user)
-//           AsyncStorage.setItem("userToken", JSON.stringify(user)).then(() => {
-//             console.log("Token Saved!")
-//             // TODO:
-//             // LAST CODE HERE
-//             // SUSPECT APP SCREEN TRANSITION FIRST, DATA IS DISPATCHED SECOND
-//             console.log("", user)
-//             dispatch(logInSuccess(user));
-//           })
-//           .catch(err => console.log("error in AsyncStorage",err))
-//         })
-//       })
-//       .catch(err => {
-//         console.log("error from signIn: ", err);
-//         dispatch(logInFailure(err));
-//       });
-//   };
-// }
-
 export function signIn(email, password) {
   return async dispatch => {
     dispatch(logIn());
@@ -130,8 +100,6 @@ export function signIn(email, password) {
       await firebase.auth().onAuthStateChanged(async user => {
         if (user) {
           await AsyncStorage.setItem("userToken", JSON.stringify(user));
-          console.log("Output from onAuthStateChanged: ", user);
-          console.log("Success!");
           dispatch(logInSuccess(user));
         } else {
           console.log("Still authenticating...");

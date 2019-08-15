@@ -4,7 +4,6 @@ import { createAppContainer } from "react-navigation";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 
-// Redux
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./src/reducers";
@@ -24,14 +23,10 @@ const idfile = `${FileSystem.documentDirectory}/userid`;
 
 FileSystem.getInfoAsync(idfile).then(file => {
   if (file.exists) {
-    FileSystem.readAsStringAsync(idfile).then(result => {
-      console.log("app uid exists: " + result);
-    });
+    FileSystem.readAsStringAsync(idfile);
   } else {
     var userid = uuid();
-    FileSystem.writeAsStringAsync(idfile, userid).then(result => {
-      console.log("uid does not exist, writing ", userid);
-    });
+    FileSystem.writeAsStringAsync(idfile, userid);
     db.collection("users")
       .doc(userid)
       .set({

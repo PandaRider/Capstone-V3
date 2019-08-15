@@ -36,9 +36,8 @@ export default class RoomDetails extends React.Component {
       gotRoom: false,
       checkPurpose: true,
       checkAttendees: true,
-      isLoading: false,
+      isLoading: false
     };
-    // console.log("state is: ", this.state)
   }
 
   getRoomDetails() {
@@ -72,8 +71,8 @@ export default class RoomDetails extends React.Component {
 
   async makeBooking() {
     let [dday, dmonth, dyear] = this.state.date.split("-");
-    let startTime = this.props.navigation.getParam("start")
-    let endTime = this.props.navigation.getParam("end")
+    let startTime = this.props.navigation.getParam("start");
+    let endTime = this.props.navigation.getParam("end");
     // startTime = startTime.slice(0, -3); // WARNING: manipulating string
     // endTime = endTime.slice(0, -3);
     // let sTime = parseInt(startTime);
@@ -102,63 +101,63 @@ export default class RoomDetails extends React.Component {
     //   });
 
     // Purpose: Check for clashes. Query same dateTime slots first.
-      var dbPromises = [];
-      for (var i = 0; i < timeslots.length; i++) {
-        dbPromises.push(
-          db
-            .collection("userBookings4")
-            .where("month", "==", parseInt(dmonth))
-            .where("day", "==", parseInt(dday))
-            .where(timeslots[i], "==", true)
-            .where("roomName", "==", details.roomName)
-            .get()
-        );
-      }
-  
-      let hasClash = false;
-      this.setState({ isLoading: true })
-      await Promise.all(dbPromises).then(snapshotArr => {
-        snapshotArr.forEach(snapshot => {
-          snapshot.forEach(doc => {
-            if (doc.exists) hasClash = true;
-          });
+    var dbPromises = [];
+    for (var i = 0; i < timeslots.length; i++) {
+      dbPromises.push(
+        db
+          .collection("userBookings4")
+          .where("month", "==", parseInt(dmonth))
+          .where("day", "==", parseInt(dday))
+          .where(timeslots[i], "==", true)
+          .where("roomName", "==", details.roomName)
+          .get()
+      );
+    }
+
+    let hasClash = false;
+    this.setState({ isLoading: true });
+    await Promise.all(dbPromises).then(snapshotArr => {
+      snapshotArr.forEach(snapshot => {
+        snapshot.forEach(doc => {
+          if (doc.exists) hasClash = true;
         });
       });
-      console.log("Checking for clash...", hasClash);
-      
-      if (hasClash == false) {
-        let addMe = {
-          location:
-            "https://cdn2.f-cdn.com/contestentries/484655/17927409/57599f700cef0_thumb900.jpg",
-          bookedByUuid: "alice123"
-        };
-        addMe["date"] = this.state.date;
-        addMe["time"] = this.state.time;
-        addMe["day"] = parseInt(dday);
-        addMe["month"] = parseInt(dmonth);
-        addMe["year"] = parseInt(dyear);
-        addMe["roomName"] = details.roomName;
-        addMe["level"] = details.level;
-        addMe["location"] = details.location;
-        addMe["purpose"] = this.state.purpose;
-        addMe["attendees"] = this.state.attendees;
-        timeslots.forEach(t => {
-          addMe[t] = true;
+    });
+
+    if (hasClash == false) {
+      let addMe = {
+        location:
+          "https://cdn2.f-cdn.com/contestentries/484655/17927409/57599f700cef0_thumb900.jpg",
+        bookedByUuid: "alice123"
+      };
+      addMe["date"] = this.state.date;
+      addMe["time"] = this.state.time;
+      addMe["day"] = parseInt(dday);
+      addMe["month"] = parseInt(dmonth);
+      addMe["year"] = parseInt(dyear);
+      addMe["roomName"] = details.roomName;
+      addMe["level"] = details.level;
+      addMe["location"] = details.location;
+      addMe["purpose"] = this.state.purpose;
+      addMe["attendees"] = this.state.attendees;
+      timeslots.forEach(t => {
+        addMe[t] = true;
+      });
+
+      db.collection("userBookings4")
+        .add(addMe)
+        .then(ref => {
+          this.setBookingId(ref.id);
+          this.setState({ isLoading: false });
+          this.props.navigation.navigate("Home", {
+            bookingid: ref.id,
+            from_AddBooking: "transit from AddBooking"
+          });
         });
-        console.log(addMe);
-        
-        db.collection("userBookings4")
-          .add(addMe)
-          .then(ref => {
-            this.setBookingId(ref.id);
-            this.setState({ isLoading: false })
-            this.props.navigation.navigate("Home", { bookingid: ref.id, "from_AddBooking": "transit from AddBooking"}
-          )});
-      } else {
-        this.props.navigation.navigate("SelectDateTime")
-        // 
-      }
-      
+    } else {
+      this.props.navigation.navigate("SelectDateTime");
+      //
+    }
   }
 
   componentWillMount() {

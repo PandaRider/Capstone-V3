@@ -31,7 +31,6 @@ export default class ViewBooking extends React.Component {
   getBookingDetails() {
     var roomid = this.props.navigation.getParam("bookingid");
 
-    // db.collection("fakebookings")
     db.collection("userBookings4")
       .doc(roomid)
       .get()

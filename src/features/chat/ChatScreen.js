@@ -125,5 +125,3 @@ const styles = StyleSheet.create({
     padding: 10
   }
 });
-
-// https://github.com/FaridSafi/react-native-gifted-chat/issues/672

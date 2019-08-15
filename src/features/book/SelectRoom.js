@@ -50,14 +50,6 @@ export default class AvailableRooms extends React.Component {
         containerStyle={styles.availableroomitem}
         chevron={true}
         onPress={() =>
-          // this.props.navigation.navigate("AddBooking", {
-          //   roomid: l.id,
-          //   startTime: this.state.startTime,
-          //   endTime: this.state.endTime,
-          //   dayDate: this.state.dayDate,
-          //   monthDate: this.state.monthDate,
-          //   yearDate: this.state.yearDate,
-          // })
           this.props.navigation.navigate("AddBooking", {
             roomid: l.id,
             date: this.props.navigation.getParam("date"),
@@ -72,6 +64,7 @@ export default class AvailableRooms extends React.Component {
   componentWillMount() {
     this.getAvailableRooms();
   }
+
   componentDidMount() {
     let startTime = this.props.navigation.getParam("startTime", "try again!");
     let endTime = this.props.navigation.getParam("endTime", "try again!");
@@ -80,7 +73,6 @@ export default class AvailableRooms extends React.Component {
     let yearDate = this.props.navigation.getParam("yearDate", "try again");
     this.setState({ startTime, endTime, dayDate, monthDate, yearDate });
   }
-
 
   render() {
     return (
